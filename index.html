@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help Peças — Brand Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#0A0A0A;
+  color:#F5F5F3;
+  font-family:'Inter',system-ui,sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+}
+
+.container{
+  max-width:900px;
+  width:100%;
+  text-align:center;
+}
+
+.logo-area{
+  margin-bottom:48px;
+}
+
+.brand-name{
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  font-size:56px;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+  line-height:1;
+}
+.brand-name span{color:#CAFF00}
+
+.subtitle{
+  font-size:14px;
+  color:#6B6B6B;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  font-weight:500;
+  margin-top:12px;
+}
+
+.divider{
+  width:60px;
+  height:3px;
+  background:#CAFF00;
+  margin:40px auto;
+}
+
+.section-label{
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  color:#6B6B6B;
+  margin-bottom:24px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-top:16px;
+}
+
+.card{
+  background:#1A1A1A;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:40px 32px;
+  text-decoration:none;
+  color:inherit;
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+  transition:all 0.3s ease;
+}
+
+.card-electric::before{background:#CAFF00}
+.card-steel::before{background:#4A90B8}
+
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,255,255,0.12);
+}
+.card-electric:hover{
+  border-color:rgba(202,255,0,0.3);
+  box-shadow:0 8px 32px rgba(202,255,0,0.08);
+}
+.card-steel:hover{
+  border-color:rgba(74,144,184,0.3);
+  box-shadow:0 8px 32px rgba(74,144,184,0.08);
+}
+
+.card-tag{
+  display:inline-block;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  font-size:10px;
+  padding:3px 12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+.card-electric .card-tag{background:#CAFF00;color:#0A0A0A}
+.card-steel .card-tag{background:#4A90B8;color:#0D1B2A}
+
+.card-title{
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  font-size:24px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:8px;
+}
+.card-electric .card-title{color:#CAFF00}
+.card-steel .card-title{color:#4A90B8}
+
+.card-desc{
+  font-size:13px;
+  line-height:1.7;
+  color:#6B6B6B;
+}
+
+.card-arrow{
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  margin-top:20px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:gap 0.3s ease;
+}
+.card-electric .card-arrow{color:#CAFF00}
+.card-steel .card-arrow{color:#4A90B8}
+
+.card:hover .card-arrow{gap:14px}
+
+.footer{
+  margin-top:60px;
+  font-size:11px;
+  color:#333;
+  letter-spacing:1px;
+}
+.footer a{color:#6B6B6B;text-decoration:none}
+.footer a:hover{color:#CAFF00}
+
+.version{
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  font-size:80px;
+  color:rgba(202,255,0,0.04);
+  position:fixed;
+  bottom:20px;
+  right:40px;
+  line-height:1;
+  pointer-events:none;
+}
+
+@media(max-width:640px){
+  .cards{grid-template-columns:1fr}
+  .brand-name{font-size:40px}
+  .version{font-size:50px;right:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo-area">
+    <div class="brand-name">HELP <span>PEÇAS</span></div>
+    <div class="subtitle">Brand Book · E-Commerce · Mobilidade Elétrica</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Selecione a versão do manual</div>
+
+  <div class="cards">
+    <a href="docs/electric-lime.html" class="card card-electric">
+      <div class="card-tag">Original</div>
+      <div class="card-title">Electric Lime</div>
+      <p class="card-desc">
+        Versão principal do Brand Book com a paleta original —
+        Volt Black, Electric Lime e energia urbana.
+        O DNA da marca em sua forma mais vibrante.
+      </p>
+      <div class="card-arrow">Abrir Manual →</div>
+    </a>
+
+    <a href="docs/steel-blue.html" class="card card-steel">
+      <div class="card-tag">Corporativo</div>
+      <div class="card-title">Steel Blue</div>
+      <p class="card-desc">
+        Versão corporativa com paleta Steel Blue —
+        Deep Navy, Steel Blue Light e sofisticação premium.
+        Ideal para investidores e parceiros estratégicos.
+      </p>
+      <div class="card-arrow">Abrir Manual →</div>
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>Help Peças © 2026 · v4.0 · <a href="https://helppecas.com">helppecas.com</a></p>
+  </div>
+</div>
+
+<div class="version">2026</div>
+
+</body>
+</html>
