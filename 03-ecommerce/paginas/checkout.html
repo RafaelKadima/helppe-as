@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Help Peças | O rolê não pode parar! ∞</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vb: #0A0A0A;
+            --el: #CAFF00;
+            --cg: #6B6B6B;
+            --sb: #2D4659;
+            --ow: #F5F5F3;
+            --dc: #1A1A1A;
+            --wo: #FF6B00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--vb);
+            color: var(--ow);
+            line-height: 1.6;
+        }
+
+        /* Slogan Bar */
+        .slogan-bar {
+            background-color: var(--el);
+            color: var(--vb);
+            padding: 12px 0;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dc);
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--sb);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--el);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .header-logo:hover {
+            color: var(--ow);
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px;
+            background-color: var(--dc);
+            border-bottom: 1px solid var(--sb);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--cg);
+        }
+
+        .step.active {
+            color: var(--el);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--cg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .step.active .step-number {
+            border-color: var(--el);
+            background-color: var(--el);
+            color: var(--vb);
+        }
+
+        .step-connector {
+            width: 40px;
+            height: 2px;
+            background-color: var(--sb);
+        }
+
+        @media (max-width: 900px) {
+            .progress-steps {
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+            }
+
+            .step-connector {
+                display: none;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Two Column Layout */
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* Forms Section */
+        .forms-section {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .form-block {
+            background-color: var(--dc);
+            border: 1px solid var(--sb);
+            padding: 24px;
+            border-radius: 4px;
+        }
+
+        .form-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--el);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--cg);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background-color: var(--vb);
+            border: 1px solid var(--sb);
+            color: var(--ow);
+            padding: 12px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--el);
+        }
+
+        .form-group input::placeholder {
+            color: var(--cg);
+        }
+
+        /* Two Column Form Row */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row-full {
+            grid-column: 1 / -1;
+        }
+
+        /* CEP Section */
+        .cep-group {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .cep-group .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .cep-group .form-group label {
+            margin-bottom: 8px;
+        }
+
+        .cep-btn {
+            background-color: var(--el);
+            color: var(--vb);
+            border: none;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .cep-btn:hover {
+            background-color: #B8E600;
+        }
+
+        /* Shipping Options */
+        .shipping-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background-color: var(--vb);
+            border: 1px solid var(--sb);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .shipping-option:hover {
+            border-color: var(--el);
+        }
+
+        .shipping-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--el);
+        }
+
+        .shipping-option label {
+            flex: 1;
+            cursor: pointer;
+            margin: 0;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .shipping-price {
+            color: var(--el);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Payment Tabs */
+        .payment-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--sb);
+        }
+
+        .payment-tab {
+            background: none;
+            border: none;
+            color: var(--cg);
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .payment-tab.active {
+            color: var(--el);
+            border-bottom-color: var(--el);
+        }
+
+        .payment-tab:hover {
+            color: var(--ow);
+        }
+
+        .payment-content {
+            display: none;
+        }
+
+        .payment-content.active {
+            display: block;
+        }
+
+        /* QR Code */
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background-color: var(--vb);
+            border: 2px solid var(--sb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin: 20px auto;
+        }
+
+        .pix-badge {
+            display: inline-block;
+            background-color: var(--wo);
+            color: var(--vb);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .pix-total {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--el);
+            margin-top: 16px;
+        }
+
+        /* Card Payment */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .card-field {
+            grid-column: 1 / -1;
+        }
+
+        .card-field.half {
+            grid-column: span 1;
+        }
+
+        /* Boleto */
+        .boleto-info {
+            background-color: var(--vb);
+            border: 1px solid var(--sb);
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--cg);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .boleto-btn {
+            width: 100%;
+            background-color: var(--el);
+            color: var(--vb);
+            border: none;
+            padding: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .boleto-btn:hover {
+            background-color: #B8E600;
+        }
+
+        /* Order Summary Sidebar */
+        .order-summary {
+            background-color: var(--dc);
+            border: 1px solid var(--sb);
+            padding: 24px;
+            border-radius: 4px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--el);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--sb);
+            padding-bottom: 16px;
+        }
+
+        .summary-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--sb);
+        }
+
+        .summary-item-name {
+            flex: 1;
+            color: var(--ow);
+        }
+
+        .summary-item-qty {
+            color: var(--cg);
+            margin: 0 8px;
+        }
+
+        .summary-item-price {
+            color: var(--el);
+            font-weight: 600;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .summary-label {
+            color: var(--cg);
+        }
+
+        .summary-value {
+            color: var(--ow);
+            font-weight: 600;
+        }
+
+        .summary-divider {
+            border-top: 1px solid var(--sb);
+            margin: 16px 0;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            background-color: var(--el);
+            color: var(--vb);
+            border: none;
+            padding: 16px;
+            font-weight: 700;
+            font-size: 13px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-bottom: 12px;
+        }
+
+        .confirm-btn:hover {
+            background-color: #B8E600;
+        }
+
+        /* Trust Badges */
+        .trust-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--sb);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--cg);
+        }
+
+        .trust-item svg {
+            color: var(--el);
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .progress-steps {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cep-group {
+                flex-direction: column;
+            }
+
+            .cep-group .form-group {
+                width: 100%;
+            }
+
+            .payment-tabs {
+                flex-wrap: wrap;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-field {
+                grid-column: span 1;
+            }
+
+            .order-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 12px 16px;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+
+            .progress-steps {
+                padding: 20px;
+            }
+
+            .form-block {
+                padding: 16px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .summary-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .summary-items::-webkit-scrollbar-track {
+            background: var(--vb);
+            border-radius: 3px;
+        }
+
+        .summary-items::-webkit-scrollbar-thumb {
+            background: var(--sb);
+            border-radius: 3px;
+        }
+
+        .summary-items::-webkit-scrollbar-thumb:hover {
+            background: var(--cg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Slogan Bar -->
+    <div class="slogan-bar">
+        O ROLÊ NÃO PODE PARAR! ∞
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="header-logo">Help Peças</a>
+    </header>
+
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+        <div class="step active">
+            <div class="step-number">①</div>
+            <span>Dados</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+            <div class="step-number">②</div>
+            <span>Entrega</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+            <div class="step-number">③</div>
+            <span>Pagamento</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+            <div class="step-number">④</div>
+            <span>Confirmação</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="checkout-layout">
+            <!-- Forms Section -->
+            <div class="forms-section">
+                <!-- Personal Data -->
+                <div class="form-block">
+                    <h2 class="form-title">Dados Pessoais</h2>
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" placeholder="João Silva Santos">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CPF</label>
+                            <input type="text" placeholder="000.000.000-00">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone</label>
+                            <input type="tel" placeholder="(11) 99999-9999">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="seu.email@exemplo.com">
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="form-block">
+                    <h2 class="form-title">Endereço de Entrega</h2>
+                    <div class="cep-group">
+                        <div class="form-group">
+                            <label>CEP</label>
+                            <input type="text" placeholder="00000-000">
+                        </div>
+                        <button class="cep-btn">BUSCAR</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Rua</label>
+                        <input type="text" placeholder="Rua das Peças">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Número</label>
+                            <input type="text" placeholder="123">
+                        </div>
+                        <div class="form-group">
+                            <label>Complemento</label>
+                            <input type="text" placeholder="Apto 456">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bairro</label>
+                            <input type="text" placeholder="Centro">
+                        </div>
+                        <div class="form-group">
+                            <label>Cidade</label>
+                            <input type="text" placeholder="São Paulo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select>
+                            <option>Selecione o estado</option>
+                            <option>SP</option>
+                            <option>RJ</option>
+                            <option>MG</option>
+                            <option>BA</option>
+                            <option>RS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Shipping Options -->
+                <div class="form-block">
+                    <h2 class="form-title">Tipo de Entrega</h2>
+                    <div class="shipping-options">
+                        <div class="shipping-option">
+                            <input type="radio" id="sedex" name="shipping" value="sedex" checked>
+                            <label for="sedex">SEDEX • 3 a 5 dias úteis</label>
+                            <span class="shipping-price">R$ 24,90</span>
+                        </div>
+                        <div class="shipping-option">
+                            <input type="radio" id="pac" name="shipping" value="pac">
+                            <label for="pac">PAC • 7 a 12 dias úteis</label>
+                            <span class="shipping-price">R$ 14,90</span>
+                        </div>
+                        <div class="shipping-option">
+                            <input type="radio" id="retirada" name="shipping" value="retirada">
+                            <label for="retirada">RETIRADA NA LOJA • Somos em SP</label>
+                            <span class="shipping-price">Grátis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment -->
+                <div class="form-block">
+                    <h2 class="form-title">Método de Pagamento</h2>
+
+                    <div class="payment-tabs">
+                        <button class="payment-tab active" onclick="switchPayment(event, 'pix')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; margin-right: 6px;">
+                                <rect x="2" y="2" width="20" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="6" cy="6" r="1" fill="currentColor"/>
+                                <circle cx="18" cy="6" r="1" fill="currentColor"/>
+                                <circle cx="6" cy="18" r="1" fill="currentColor"/>
+                                <circle cx="18" cy="18" r="1" fill="currentColor"/>
+                            </svg>
+                            PIX
+                        </button>
+                        <button class="payment-tab" onclick="switchPayment(event, 'cartao')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; margin-right: 6px;">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            CARTÃO
+                        </button>
+                        <button class="payment-tab" onclick="switchPayment(event, 'boleto')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; margin-right: 6px;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="12" y1="19" x2="12" y2="19"></line>
+                            </svg>
+                            BOLETO
+                        </button>
+                    </div>
+
+                    <!-- PIX Content -->
+                    <div id="pix" class="payment-content active">
+                        <div style="text-align: center;">
+                            <span class="pix-badge">5% DE DESCONTO</span>
+                            <div class="qr-code">
+                                <svg width="120" height="120" viewBox="0 0 100 100" fill="var(--el)">
+                                    <rect x="10" y="10" width="30" height="30" fill="var(--el)"/>
+                                    <rect x="15" y="15" width="20" height="20" fill="var(--vb)"/>
+                                    <rect x="18" y="18" width="14" height="14" fill="var(--el)"/>
+                                    <rect x="60" y="10" width="30" height="30" fill="var(--el)"/>
+                                    <rect x="65" y="15" width="20" height="20" fill="var(--vb)"/>
+                                    <rect x="68" y="18" width="14" height="14" fill="var(--el)"/>
+                                    <rect x="10" y="60" width="30" height="30" fill="var(--el)"/>
+                                    <rect x="15" y="65" width="20" height="20" fill="var(--vb)"/>
+                                    <rect x="18" y="68" width="14" height="14" fill="var(--el)"/>
+                                    <circle cx="75" cy="75" r="8" fill="var(--el)"/>
+                                </svg>
+                            </div>
+                            <div class="pix-total">R$ 227,81</div>
+                            <p style="font-size: 12px; color: var(--cg); margin-top: 12px;">Código PIX gerado automaticamente após confirmação</p>
+                        </div>
+                    </div>
+
+                    <!-- Cartão Content -->
+                    <div id="cartao" class="payment-content">
+                        <div class="card-grid">
+                            <div class="form-group card-field">
+                                <label>Número do Cartão</label>
+                                <input type="text" placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div class="form-group card-field">
+                                <label>Nome no Cartão</label>
+                                <input type="text" placeholder="João Silva Santos">
+                            </div>
+                            <div class="form-group card-field half">
+                                <label>Validade (MM/AA)</label>
+                                <input type="text" placeholder="12/25">
+                            </div>
+                            <div class="form-group card-field half">
+                                <label>CVV</label>
+                                <input type="text" placeholder="000">
+                            </div>
+                            <div class="form-group card-field">
+                                <label>Parcelar em</label>
+                                <select>
+                                    <option>1x R$ 239,80 sem juros</option>
+                                    <option>2x R$ 119,90 sem juros</option>
+                                    <option>3x R$ 79,93 sem juros</option>
+                                    <option>4x R$ 59,95 com juros</option>
+                                    <option>5x R$ 47,96 com juros</option>
+                                    <option>6x R$ 39,97 com juros</option>
+                                    <option>10x R$ 23,98 com juros</option>
+                                    <option>12x R$ 19,98 com juros</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Boleto Content -->
+                    <div id="boleto" class="payment-content">
+                        <div class="boleto-info">
+                            <strong>Boleto Bancário</strong><br>
+                            Você receberá um código de barras para pagar em qualquer banco, caixa eletrônico ou aplicativo bancário. A confirmação é automática após o pagamento.
+                        </div>
+                        <button class="boleto-btn">GERAR BOLETO</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <div class="summary-title">Seu Pedido</div>
+
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <span class="summary-item-name">Paralama Dianteiro</span>
+                        <span class="summary-item-qty">x1</span>
+                        <span class="summary-item-price">R$ 89,90</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-item-name">Kit Freio a Disco</span>
+                        <span class="summary-item-qty">x1</span>
+                        <span class="summary-item-price">R$ 149,90</span>
+                    </div>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row">
+                    <span class="summary-label">Subtotal:</span>
+                    <span class="summary-value">R$ 239,80</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Frete:</span>
+                    <span class="summary-value">R$ 24,90</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Desconto:</span>
+                    <span class="summary-value">−R$ 0,00</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-total">
+                    <span>Total:</span>
+                    <span>R$ 264,70</span>
+                </div>
+
+                <button class="confirm-btn">CONFIRMAR PEDIDO</button>
+
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <span>Compra segura com SSL</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                        <span>Garantia de 6 meses</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 7l-1.5-1.5a2.121 2.121 0 0 0-3 0L9 11.121a2.121 2.121 0 1 1 3-3L19 3a2.121 2.121 0 0 1 3 3v1m-3 6l1.5 1.5"></path>
+                        </svg>
+                        <span>Fabricante original</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchPayment(e, method) {
+            e.preventDefault();
+
+            // Remove active class from all tabs and contents
+            document.querySelectorAll('.payment-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.payment-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Add active class to clicked tab and corresponding content
+            e.target.closest('.payment-tab').classList.add('active');
+            document.getElementById(method).classList.add('active');
+        }
+    </script>
+</body>
+</html>

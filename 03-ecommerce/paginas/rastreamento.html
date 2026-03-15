@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento - Help Peças | Acompanhe seu Pedido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vb: #0A0A0A;
+            --el: #CAFF00;
+            --cg: #6B6B6B;
+            --sb: #2D4659;
+            --ow: #F5F5F3;
+            --dc: #1A1A1A;
+            --wo: #FF6B00;
+        }
+
+        body {
+            background-color: var(--vb);
+            color: var(--ow);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* SLOGAN BAR */
+        .slogan-bar {
+            background-color: var(--el);
+            color: var(--vb);
+            text-align: center;
+            padding: 12px 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        /* HEADER / NAV */
+        header {
+            background-color: var(--dc);
+            border-bottom: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--el);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            flex: 1;
+        }
+
+        nav a {
+            color: var(--ow);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--el);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--ow);
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            color: var(--el);
+        }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--cg);
+            display: flex;
+            gap: 8px;
+        }
+
+        .breadcrumb a {
+            color: var(--el);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--ow);
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1200px;
+            margin: 60px auto 80px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: var(--cg);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* TRACKING FORM */
+        .tracking-form-section {
+            max-width: 600px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .tracking-form {
+            background-color: var(--dc);
+            border: 1px solid rgba(202, 255, 0, 0.1);
+            border-radius: 8px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--el);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            padding: 12px 16px;
+            background-color: rgba(202, 255, 0, 0.05);
+            border: 1px solid rgba(202, 255, 0, 0.15);
+            border-radius: 4px;
+            color: var(--ow);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: var(--cg);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--el);
+            background-color: rgba(202, 255, 0, 0.1);
+        }
+
+        .btn-track {
+            padding: 14px 28px;
+            background-color: var(--el);
+            color: var(--vb);
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .btn-track:hover {
+            background-color: var(--ow);
+            transform: translateY(-2px);
+        }
+
+        /* TRACKING RESULT */
+        .tracking-result-section {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(202, 255, 0, 0.1);
+        }
+
+        .result-info h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .result-info p {
+            font-size: 13px;
+            color: var(--cg);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--el);
+            color: var(--vb);
+            border-radius: 4px;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* PROGRESS BAR */
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: var(--cg);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-bar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .progress-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(202, 255, 0, 0.3);
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.completed .progress-step-dot {
+            background-color: var(--el);
+            border-color: var(--el);
+        }
+
+        .progress-step.active .progress-step-dot {
+            background-color: var(--el);
+            border-color: var(--el);
+            box-shadow: 0 0 8px rgba(202, 255, 0, 0.5);
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(202, 255, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(202, 255, 0, 0.8);
+            }
+        }
+
+        .progress-step-label {
+            font-size: 11px;
+            color: var(--cg);
+            text-align: center;
+            max-width: 80px;
+        }
+
+        .progress-step.completed .progress-step-label,
+        .progress-step.active .progress-step-label {
+            color: var(--el);
+        }
+
+        .progress-step.completed::after {
+            content: '';
+            position: absolute;
+            width: calc(100% + 12px);
+            height: 2px;
+            background-color: var(--el);
+            top: 6px;
+            left: calc(50% + 8px);
+        }
+
+        .progress-step {
+            position: relative;
+        }
+
+        /* TIMELINE */
+        .timeline-section {
+            margin-bottom: 40px;
+        }
+
+        .timeline-label {
+            font-size: 12px;
+            color: var(--cg);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline {
+            border-left: 2px solid rgba(202, 255, 0, 0.2);
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .timeline-item {
+            padding-bottom: 24px;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -13px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--el);
+            border: 2px solid var(--vb);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--el);
+            margin-bottom: 4px;
+        }
+
+        .timeline-status {
+            font-size: 14px;
+            color: var(--ow);
+            margin-bottom: 8px;
+        }
+
+        .timeline-location {
+            font-size: 12px;
+            color: var(--cg);
+        }
+
+        /* DELIVERY ESTIMATE */
+        .delivery-estimate {
+            background-color: var(--dc);
+            border: 1px solid rgba(202, 255, 0, 0.15);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .delivery-icon {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(202, 255, 0, 0.1);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delivery-icon svg {
+            width: 28px;
+            height: 28px;
+            color: var(--el);
+        }
+
+        .delivery-info h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            color: var(--cg);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .delivery-info p {
+            font-size: 16px;
+            color: var(--ow);
+            font-weight: 600;
+        }
+
+        /* ORDER ITEMS */
+        .order-items-section {
+            margin-bottom: 40px;
+        }
+
+        .order-items-label {
+            font-size: 12px;
+            color: var(--cg);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .order-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 16px;
+            background-color: var(--dc);
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(202, 255, 0, 0.08);
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2D4659 0%, #1A1A1A 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .item-image svg {
+            width: 40px;
+            height: 40px;
+            opacity: 0.3;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .item-sku {
+            font-size: 12px;
+            color: var(--cg);
+            margin-bottom: 8px;
+        }
+
+        .item-quantity {
+            font-size: 12px;
+            color: var(--el);
+            font-weight: 600;
+        }
+
+        /* HELP SECTION */
+        .help-section {
+            background-color: var(--dc);
+            border: 1px solid rgba(202, 255, 0, 0.1);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .help-section h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .help-section p {
+            color: var(--cg);
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .btn-help {
+            padding: 12px 28px;
+            background-color: var(--el);
+            color: var(--vb);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-family: 'Rajdhani', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-help:hover {
+            background-color: var(--ow);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--dc);
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 60px 20px 0;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--el);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: var(--ow);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--el);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 0;
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--cg);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            nav {
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .result-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .delivery-estimate {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .progress-bar {
+                flex-wrap: wrap;
+            }
+
+            .progress-step {
+                flex: 0 1 calc(50% - 6px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero .subtitle {
+                font-size: 14px;
+            }
+
+            .tracking-form {
+                padding: 24px;
+            }
+
+            .result-header {
+                flex-direction: column;
+            }
+
+            .delivery-estimate {
+                padding: 16px;
+            }
+
+            .order-item {
+                flex-direction: column;
+            }
+
+            .item-image {
+                width: 100%;
+                height: 120px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-bar {
+                flex-direction: column;
+            }
+
+            .progress-step {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slogan-bar">
+        O rolê não pode parar! ∞
+    </div>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Help Peças</a>
+            <ul>
+                <li><a href="categoria.html">Categorias</a></li>
+                <li><a href="quem-somos.html">Quem Somos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                </button>
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </button>
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Rastreamento</span>
+    </div>
+
+    <section class="hero">
+        <h1>RASTREIE SEU PEDIDO</h1>
+        <p class="subtitle">Acompanhe seu rolê em tempo real</p>
+    </section>
+
+    <section class="tracking-form-section">
+        <form class="tracking-form">
+            <div class="form-group">
+                <label for="order-number">Número do Pedido</label>
+                <input type="text" id="order-number" placeholder="HLP-2025-XXXXXX" required>
+            </div>
+            <div class="form-group">
+                <label for="order-email">Email</label>
+                <input type="email" id="order-email" placeholder="seu@email.com" required>
+            </div>
+            <button type="submit" class="btn-track">RASTREAR</button>
+        </form>
+    </section>
+
+    <section class="tracking-result-section">
+        <div class="result-header">
+            <div class="result-info">
+                <h2>Pedido #HLP-2025-004821</h2>
+                <p>Solicitado em 26 de fevereiro, 2025</p>
+            </div>
+            <div class="status-badge">EM TRÂNSITO</div>
+        </div>
+
+        <div class="progress-container">
+            <p class="progress-label">Progresso do Pedido</p>
+            <div class="progress-bar">
+                <div class="progress-step completed">
+                    <div class="progress-step-dot"></div>
+                    <div class="progress-step-label">Confirmado</div>
+                </div>
+                <div class="progress-step completed">
+                    <div class="progress-step-dot"></div>
+                    <div class="progress-step-label">Preparando</div>
+                </div>
+                <div class="progress-step completed">
+                    <div class="progress-step-dot"></div>
+                    <div class="progress-step-label">Enviado</div>
+                </div>
+                <div class="progress-step active">
+                    <div class="progress-step-dot"></div>
+                    <div class="progress-step-label">Em Trânsito</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-step-dot"></div>
+                    <div class="progress-step-label">Entregue</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <p class="timeline-label">Histórico de Movimentação</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">28 de fevereiro, 2025 • 14:32</div>
+                    <div class="timeline-status">Objeto em trânsito - São Paulo/SP → Destino</div>
+                    <div class="timeline-location">Saída do centro de distribuição regional</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">27 de fevereiro, 2025 • 09:15</div>
+                    <div class="timeline-status">Objeto postado - São Paulo/SP</div>
+                    <div class="timeline-location">Enviado via transportadora Help Express</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">26 de fevereiro, 2025 • 18:40</div>
+                    <div class="timeline-status">Pedido despachado do CD Help Peças</div>
+                    <div class="timeline-location">Centro de distribuição - Guarulhos/SP</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">26 de fevereiro, 2025 • 10:22</div>
+                    <div class="timeline-status">Pedido confirmado e em separação</div>
+                    <div class="timeline-location">Aguardando preparação do envio</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="delivery-estimate">
+            <div class="delivery-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8C4 5.5 7.58 2 12 2s8 3.5 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+            </div>
+            <div class="delivery-info">
+                <h3>Previsão de Entrega</h3>
+                <p>03 de março, 2025 - 05 de março, 2025</p>
+            </div>
+        </div>
+
+        <div class="order-items-section">
+            <p class="order-items-label">Itens do Pedido</p>
+            <div class="order-items">
+                <div class="order-item">
+                    <div class="item-image">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9 9h.01M15 9h.01M9 15a3 3 0 0 0 6 0"></path></svg>
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">Pneu Elétrico Help Pro 10 polegadas</div>
+                        <div class="item-sku">SKU: HLP-PNEU-PRO-10</div>
+                        <div class="item-quantity">Quantidade: 1</div>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="item-image">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">Freio a Disco Help Performance 160mm</div>
+                        <div class="item-sku">SKU: HLP-FREIO-DISC-160</div>
+                        <div class="item-quantity">Quantidade: 1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Problemas com Entrega?</h2>
+            <p>Se você não receber seu pedido dentro do prazo estimado ou tiver dúvidas sobre seu rastreamento, nossa equipe está pronta para ajudar.</p>
+            <a href="contato.html" class="btn-help">ENTRAR EM CONTATO</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Categorias</h3>
+                <ul>
+                    <li><a href="categoria.html">Pneus e Câmaras</a></li>
+                    <li><a href="categoria.html">Freios e Discos</a></li>
+                    <li><a href="categoria.html">Baterias</a></li>
+                    <li><a href="categoria.html">Motores</a></li>
+                    <li><a href="categoria.html">Acessórios</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Empresa</h3>
+                <ul>
+                    <li><a href="quem-somos.html">Quem Somos</a></li>
+                    <li><a href="contato.html">Entre em Contato</a></li>
+                    <li><a href="rastreamento.html">Rastreamento</a></li>
+                    <li><a href="faq.html">Perguntas Frequentes</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Suporte</h3>
+                <ul>
+                    <li><a href="politicas.html">Política de Privacidade</a></li>
+                    <li><a href="politicas.html">Termos de Uso</a></li>
+                    <li><a href="politicas.html">Trocas e Devoluções</a></li>
+                    <li><a href="politicas.html">Política de Frete</a></li>
+                    <li><a href="contato.html">Suporte ao Cliente</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Conecte-se</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Help Peças. Todos os direitos reservados.</p>
+            <p>Desenvolvido com <span style="color: var(--el);">∞</span> para o rolê</p>
+        </div>
+    </footer>
+</body>
+</html>

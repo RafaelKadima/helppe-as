@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Peças — Sistema de Gestão Pré-Lançamento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <style>
+        :root {
+            --vb: #0A0A0A;
+            --el: #CAFF00;
+            --cg: #6B6B6B;
+            --sb: #2D4659;
+            --ow: #F5F5F3;
+            --dc: #1A1A1A;
+            --wo: #FF6B00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--ow);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100vh;
+            background: var(--vb);
+            padding: 24px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--el);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: var(--cg);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            flex: 1;
+            margin-bottom: 32px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            font-size: 13px;
+            color: var(--cg);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--el);
+            border-left-color: var(--el);
+        }
+
+        .nav-link.active {
+            color: var(--el);
+            border-left-color: var(--el);
+            background: rgba(202, 255, 0, 0.1);
+        }
+
+        .sidebar-footer {
+            font-size: 11px;
+            color: var(--cg);
+            text-align: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            margin-left: 220px;
+            flex: 1;
+            padding: 0;
+        }
+
+        section {
+            padding: 48px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        section h2 {
+            font-size: 28px;
+            color: var(--vb);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            color: var(--cg);
+            margin-bottom: 32px;
+        }
+
+        /* CARDS */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .card-grid.cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .card-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .card-grid.cols-5 {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--el);
+            box-shadow: 0 4px 12px rgba(202, 255, 0, 0.1);
+        }
+
+        .card-value {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--vb);
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: var(--cg);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .card-note {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .card.highlight .card-value {
+            color: var(--el);
+        }
+
+        .card.warning {
+            border-color: var(--wo);
+        }
+
+        .card.warning .card-value {
+            color: var(--wo);
+        }
+
+        /* CHARTS & CONTENT SECTIONS */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .charts-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .chart-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--vb);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+
+        /* TABLES */
+        .table-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--vb);
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-critical {
+            background: rgba(255, 107, 0, 0.15);
+            color: var(--wo);
+        }
+
+        .status-in-progress {
+            background: rgba(45, 70, 89, 0.15);
+            color: var(--sb);
+        }
+
+        .status-delayed {
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--wo);
+        }
+
+        .status-high {
+            background: rgba(255, 107, 0, 0.15);
+            color: var(--wo);
+        }
+
+        .status-medium {
+            background: rgba(107, 107, 107, 0.15);
+            color: var(--cg);
+        }
+
+        .status-complete {
+            background: rgba(202, 255, 0, 0.15);
+            color: #5a7a00;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--el);
+            transition: width 0.3s;
+        }
+
+        /* FUNNEL */
+        .funnel {
+            margin-bottom: 32px;
+        }
+
+        .funnel-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .funnel-bar-container {
+            flex: 1;
+            margin-right: 16px;
+        }
+
+        .funnel-bar {
+            height: 40px;
+            background: var(--el);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--vb);
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .funnel-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--vb);
+            min-width: 100px;
+        }
+
+        .funnel-percent {
+            font-size: 11px;
+            color: var(--cg);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* INSIGHT BOX */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(202, 255, 0, 0.1) 0%, rgba(45, 70, 89, 0.05) 100%);
+            border-left: 3px solid var(--el);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .insight-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            color: var(--vb);
+            margin-bottom: 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        /* TEAM MEMBERS */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .team-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            background: var(--el);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--vb);
+            font-size: 18px;
+        }
+
+        .team-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--vb);
+            margin-bottom: 4px;
+        }
+
+        .team-role {
+            font-size: 11px;
+            color: var(--cg);
+            margin-bottom: 4px;
+        }
+
+        .team-dept {
+            font-size: 10px;
+            color: #999;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .timeline-quarters {
+            display: flex;
+            gap: 0;
+            min-width: 100%;
+        }
+
+        .timeline-quarter {
+            flex: 0 0 calc((100% - 40px) / 11);
+            padding: 0 8px;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .timeline-quarter:last-child {
+            border-right: none;
+        }
+
+        .quarter-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--vb);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .timeline-pillar {
+            margin-bottom: 24px;
+        }
+
+        .pillar-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--cg);
+            margin-bottom: 8px;
+            min-width: 120px;
+        }
+
+        .timeline-bars {
+            display: flex;
+            gap: 0;
+            min-width: 100%;
+        }
+
+        .timeline-bar {
+            height: 24px;
+            border-radius: 3px;
+            margin: 2px;
+            transition: all 0.2s;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .timeline-bar:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .marker-current {
+            position: relative;
+            display: inline-block;
+            margin: 12px 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--el);
+        }
+
+        /* FILTER BUTTONS */
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--el);
+            color: var(--el);
+            background: rgba(202, 255, 0, 0.05);
+        }
+
+        /* PROCESS CARDS */
+        .process-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .process-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .process-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--vb);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .process-steps {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .process-sla {
+            font-size: 11px;
+            color: var(--cg);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e0e0e0;
+            text-transform: uppercase;
+        }
+
+        /* MILESTONES */
+        .milestones {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .milestone {
+            background: white;
+            border: 1px solid var(--el);
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .milestone-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .milestone-date {
+            font-weight: 600;
+            color: var(--vb);
+            margin-bottom: 2px;
+        }
+
+        .milestone-desc {
+            font-size: 10px;
+            color: var(--cg);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1600px) {
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .card-grid.cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-grid.cols-5 {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .process-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .milestones {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .scroll-spy {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="scroll-spy">
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">HELP PEÇAS</div>
+            <div class="sidebar-subtitle">Sistema de Gestão</div>
+            <nav class="nav-links">
+                <a class="nav-link active" data-section="section-1">Painel Geral</a>
+                <a class="nav-link" data-section="section-2">Mercado & Oportunidade</a>
+                <a class="nav-link" data-section="section-3">Receita & Metas</a>
+                <a class="nav-link" data-section="section-4">Marketing & Canais</a>
+                <a class="nav-link" data-section="section-5">Funil de Conversão</a>
+                <a class="nav-link" data-section="section-6">Projetos & Entregas</a>
+                <a class="nav-link" data-section="section-7">Equipe & Operação</a>
+                <a class="nav-link" data-section="section-8">Roadmap 2026-2028</a>
+            </nav>
+            <div class="sidebar-footer">v4.0 · Mar 2026 · Lançamento Abr</div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+            <!-- SECTION 1: PAINEL GERAL -->
+            <section id="section-1">
+                <h2>Painel Geral</h2>
+                <div class="section-subtitle">Contagem Regressiva para o Lançamento</div>
+
+                <!-- COUNTDOWN CARDS -->
+                <div class="card-grid">
+                    <div class="card highlight">
+                        <div class="card-label">Lançamento</div>
+                        <div class="card-value">27<br><span style="font-size: 18px;">DIAS</span></div>
+                        <div class="card-note">1 de Abril</div>
+                    </div>
+                    <div class="card warning">
+                        <div class="card-label">Preparação</div>
+                        <div class="card-value">81%</div>
+                        <div class="card-note">21 de 26 tarefas</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Meta Ano 1</div>
+                        <div class="card-value">R$ 2.7M</div>
+                        <div class="card-note">9 meses · Abr–Dez</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">SKUs Cadastrados</div>
+                        <div class="card-value">487</div>
+                        <div class="card-note">Meta: 500 até lançamento</div>
+                    </div>
+                    <div class="card highlight">
+                        <div class="card-label">Equipe</div>
+                        <div class="card-value">7</div>
+                        <div class="card-note">pessoas · Fase 1 completa</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Investimento Mkт</div>
+                        <div class="card-value">R$ 14K</div>
+                        <div class="card-note">/mês · Orçamento definido</div>
+                    </div>
+                </div>
+
+                <!-- CHARTS ROW 1 -->
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <div class="chart-title">Projeção de Faturamento Mensal — Ano 1</div>
+                        <canvas id="chartFaturamento"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-title">Preparação para o Lançamento — Progresso por Área</div>
+                        <canvas id="chartPreparacao"></canvas>
+                    </div>
+                </div>
+
+                <!-- CHECKLIST TABLE -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Área</th>
+                                <th>Tarefa</th>
+                                <th>Prazo</th>
+                                <th>Status</th>
+                                <th>Prioridade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tech</td>
+                                <td>Integração gateway pagamentos</td>
+                                <td>20 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                                <td><span class="status-badge status-critical">Crítica</span></td>
+                            </tr>
+                            <tr>
+                                <td>Tech</td>
+                                <td>Testes de carga plataforma</td>
+                                <td>25 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                                <td><span class="status-badge status-high">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td>Operações</td>
+                                <td>Contrato última transportadora</td>
+                                <td>15 de Março</td>
+                                <td><span class="status-badge status-delayed">Atrasado</span></td>
+                                <td><span class="status-badge status-high">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td>Operações</td>
+                                <td>Teste de fulfillment D+1</td>
+                                <td>28 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                                <td><span class="status-badge status-critical">Crítica</span></td>
+                            </tr>
+                            <tr>
+                                <td>Marketing</td>
+                                <td>Campanha de lançamento (criativo)</td>
+                                <td>25 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                                <td><span class="status-badge status-critical">Crítica</span></td>
+                            </tr>
+                            <tr>
+                                <td>Jurídico</td>
+                                <td>Registro INPI marca</td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                                <td><span class="status-badge status-medium">Média</span></td>
+                            </tr>
+                            <tr>
+                                <td>Produto</td>
+                                <td>Fotos últimos 13 SKUs</td>
+                                <td>22 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                                <td><span class="status-badge status-high">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td>Produto</td>
+                                <td>Descrições SEO (67 restantes)</td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                                <td><span class="status-badge status-medium">Média</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 2: MERCADO & OPORTUNIDADE -->
+            <section id="section-2">
+                <h2>Mercado & Oportunidade</h2>
+                <div class="section-subtitle">Por que agora?</div>
+
+                <!-- MARKET CARDS -->
+                <div class="card-grid cols-4">
+                    <div class="card">
+                        <div class="card-label">Indústria Autopeças 2025</div>
+                        <div class="card-value">R$ 275 Bi</div>
+                        <div class="card-note">Sindipeças</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Aftermarket 2025</div>
+                        <div class="card-value">R$ 57.8 Bi</div>
+                        <div class="card-note">Reposição</div>
+                    </div>
+                    <div class="card highlight">
+                        <div class="card-label">E-bikes + VE Leves 2025</div>
+                        <div class="card-value">R$ 730M</div>
+                        <div class="card-note">Aliança Bike</div>
+                    </div>
+                    <div class="card highlight">
+                        <div class="card-label">Frota VE Leves 2025</div>
+                        <div class="card-value">520K+</div>
+                        <div class="card-note">Base de clientes</div>
+                    </div>
+                </div>
+
+                <!-- TAM/SAM/SOM FUNNEL -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; margin-bottom: 32px;">
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; color: var(--vb); margin-bottom: 12px;">TAM / SAM / SOM</div>
+                        <div style="margin-bottom: 16px;">
+                            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                <div style="width: 100%; height: 36px; background: var(--el); border-radius: 4px; display: flex; align-items: center; padding: 0 16px; color: var(--vb); font-weight: 600; font-size: 12px;">TAM: R$ 4.2B — Mercado total mobilidade elétrica + peças</div>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                <div style="width: 75%; height: 36px; background: var(--sb); border-radius: 4px; display: flex; align-items: center; padding: 0 16px; color: white; font-weight: 600; font-size: 12px;">SAM: R$ 840M — Aftermarket peças VE leves</div>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <div style="width: 25%; height: 36px; background: var(--el); border-radius: 4px; display: flex; align-items: center; padding: 0 16px; color: var(--vb); font-weight: 600; font-size: 12px;">SOM: R$ 84M — 10% share</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 11px; color: var(--cg); text-align: right; margin-top: 8px;">Liderança 2028</div>
+                    </div>
+                </div>
+
+                <!-- MARKET GROWTH CHART -->
+                <div class="chart-container" style="margin-bottom: 32px;">
+                    <div class="chart-title">Mobilidade Elétrica Cresce 2x Mais Rápido que Autopeças</div>
+                    <canvas id="chartGrowth"></canvas>
+                </div>
+
+                <!-- INSIGHT BOX -->
+                <div class="insight-box">
+                    <div class="insight-title">Oportunidade de Mercado</div>
+                    Com 520K+ veículos elétricos leves em circulação (2025) e crescimento acelerado, o aftermarket de peças é um mercado nascente sem líder definido. Help Peças será a primeira marca especializada a consolidar esse espaço.
+                    <br><br>
+                    <strong>Fontes:</strong> Sindipeças 2025, Aliança Bike 2025, Mordor Intelligence, IMARC Group, Grand View Research
+                </div>
+            </section>
+
+            <!-- SECTION 3: RECEITA & METAS -->
+            <section id="section-3">
+                <h2>Receita & Metas</h2>
+                <div class="section-subtitle">Do zero à liderança</div>
+
+                <!-- TRAJECTORY CHART -->
+                <div class="charts-row full">
+                    <div class="chart-container">
+                        <div class="chart-title">Trajetória de 3 Anos: R$ 2.7M → R$ 18M → R$ 84M</div>
+                        <canvas id="chartTrajectory"></canvas>
+                    </div>
+                </div>
+
+                <!-- RAMPUP CHART -->
+                <div class="charts-row full">
+                    <div class="chart-container">
+                        <div class="chart-title">Ramp-up 2026: Crescimento Mês a Mês</div>
+                        <canvas id="chartRampup"></canvas>
+                    </div>
+                </div>
+
+                <!-- KPR TABLE -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>KPR</th>
+                                <th style="color: var(--el);">2026 (9 meses)</th>
+                                <th>2027</th>
+                                <th style="color: var(--el);">2028 ★</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Faturamento</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">R$ 2.7M</td>
+                                <td>R$ 18M</td>
+                                <td style="font-weight: 600; color: var(--el);">R$ 84M</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SKUs</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">500</td>
+                                <td>3.000</td>
+                                <td style="font-weight: 600; color: var(--el);">10.000+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Clientes/Ano</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">1.200</td>
+                                <td>6.000</td>
+                                <td style="font-weight: 600; color: var(--el);">23.000+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Taxa de Conversão</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">2.0%</td>
+                                <td>3.5%</td>
+                                <td style="font-weight: 600; color: var(--el);">4.5%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NPS</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">50+</td>
+                                <td>70+</td>
+                                <td style="font-weight: 600; color: var(--el);">80+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CAC (R$)</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">R$ 70</td>
+                                <td>R$ 45</td>
+                                <td style="font-weight: 600; color: var(--el);">R$ 30</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LTV/CAC</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">3x</td>
+                                <td>6x</td>
+                                <td style="font-weight: 600; color: var(--el);">8x+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Margem Bruta</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">35%</td>
+                                <td>40%</td>
+                                <td style="font-weight: 600; color: var(--el);">45%+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Equipe</strong></td>
+                                <td style="font-weight: 600; color: var(--el);">5-8</td>
+                                <td>15-22</td>
+                                <td style="font-weight: 600; color: var(--el);">35-50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 4: MARKETING & CANAIS -->
+            <section id="section-4">
+                <h2>Plano de Marketing</h2>
+                <div class="section-subtitle">Estratégia de aquisição — Planejamento para o lançamento com base em benchmarks do setor</div>
+
+                <!-- ALLOCATION CHART -->
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <div class="chart-title">Alocação Mensal do Investimento — R$ 14K/mês</div>
+                        <canvas id="chartAllocation"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-title">ROAS Projetado por Canal (Benchmark Mercado)</div>
+                        <canvas id="chartRoas"></canvas>
+                    </div>
+                </div>
+
+                <!-- MARKETING TABLE -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Canal</th>
+                                <th>Investimento</th>
+                                <th>Receita Proj.</th>
+                                <th>ROAS Proj.</th>
+                                <th>Leads Proj.</th>
+                                <th>CPL</th>
+                                <th>Conv. Proj.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Meta Ads</strong></td>
+                                <td>R$ 4.500</td>
+                                <td>R$ 18.000</td>
+                                <td>4.0x</td>
+                                <td>180</td>
+                                <td>R$ 25</td>
+                                <td>1.8%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Google Ads</strong></td>
+                                <td>R$ 3.500</td>
+                                <td>R$ 21.000</td>
+                                <td>6.0x</td>
+                                <td>140</td>
+                                <td>R$ 25</td>
+                                <td>2.2%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Influenciadores</strong></td>
+                                <td>R$ 2.000</td>
+                                <td>R$ 7.000</td>
+                                <td>3.5x</td>
+                                <td>105</td>
+                                <td>R$ 19</td>
+                                <td>1.6%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TikTok</strong></td>
+                                <td>R$ 1.500</td>
+                                <td>R$ 3.750</td>
+                                <td>2.5x</td>
+                                <td>90</td>
+                                <td>R$ 17</td>
+                                <td>1.4%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conteúdo/SEO</strong></td>
+                                <td>R$ 1.000</td>
+                                <td>R$ 5.000</td>
+                                <td>5.0x</td>
+                                <td>60</td>
+                                <td>R$ 17</td>
+                                <td>1.9%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Podcast</strong></td>
+                                <td>R$ 800</td>
+                                <td>R$ 2.400</td>
+                                <td>3.0x</td>
+                                <td>48</td>
+                                <td>R$ 17</td>
+                                <td>1.3%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WhatsApp</strong></td>
+                                <td>R$ 400</td>
+                                <td>R$ 4.800</td>
+                                <td>12.0x</td>
+                                <td>20</td>
+                                <td>R$ 20</td>
+                                <td>3.0%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td>R$ 300</td>
+                                <td>R$ 3.000</td>
+                                <td>10.0x</td>
+                                <td>15</td>
+                                <td>R$ 20</td>
+                                <td>2.8%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- INSIGHT BOX -->
+                <div class="insight-box">
+                    <div class="insight-title">Estratégia de Canais</div>
+                    Estratégia inicial foca em Google Ads (melhor intenção de compra) + Meta Ads (awareness). WhatsApp e Email terão maior ROAS, mas menor volume. Revisão mensal de alocação com base em dados reais a partir de maio.
+                </div>
+            </section>
+
+            <!-- SECTION 5: FUNIL DE CONVERSÃO -->
+            <section id="section-5">
+                <h2>Funil de Conversão</h2>
+                <div class="section-subtitle">Projeção para Abril — Metas baseadas em benchmarks de e-commerce brasileiro</div>
+
+                <!-- FUNNEL VISUAL -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 32px; margin-bottom: 32px;">
+                    <div class="funnel">
+                        <div class="funnel-row">
+                            <div class="funnel-label">Visitantes</div>
+                            <div class="funnel-bar-container">
+                                <div class="funnel-bar" style="width: 100%;">15.000</div>
+                            </div>
+                            <div class="funnel-percent">100%</div>
+                        </div>
+                        <div class="funnel-row">
+                            <div class="funnel-label">Leads</div>
+                            <div class="funnel-bar-container">
+                                <div class="funnel-bar" style="width: 100%; background: var(--sb);">900</div>
+                            </div>
+                            <div class="funnel-percent">6%</div>
+                        </div>
+                        <div class="funnel-row">
+                            <div class="funnel-label">Carrinhos</div>
+                            <div class="funnel-bar-container">
+                                <div class="funnel-bar" style="width: 83%; background: var(--cg);">750</div>
+                            </div>
+                            <div class="funnel-percent">5%</div>
+                        </div>
+                        <div class="funnel-row">
+                            <div class="funnel-label">Pedidos</div>
+                            <div class="funnel-bar-container">
+                                <div class="funnel-bar" style="width: 50%; background: var(--el);">300</div>
+                            </div>
+                            <div class="funnel-percent">2.0%</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--cg); margin-top: 24px; padding-top: 16px; border-top: 1px solid #e0e0e0;">
+                        <strong>Taxa de conversão meta:</strong> 2.0% (benchmark e-commerce BR: 1.5-2.5%)
+                    </div>
+                </div>
+
+                <!-- CONVERSION GROWTH CHART -->
+                <div class="chart-container" style="margin-bottom: 32px;">
+                    <div class="chart-title">Evolução da Taxa de Conversão — Q2 a Q4 2026</div>
+                    <canvas id="chartConversion"></canvas>
+                </div>
+
+                <!-- INSIGHT BOX -->
+                <div class="insight-box">
+                    <div class="insight-title">Otimização Contínua</div>
+                    A meta de 2% no primeiro mês é conservadora. Com otimização de UX, retargeting e email automation, projetamos chegar a 2.5% até setembro. Cada 0.5pp de aumento representa ~R$ 45K/mês adicionais em receita.
+                </div>
+            </section>
+
+            <!-- SECTION 6: PROJETOS & ENTREGAS -->
+            <section id="section-6">
+                <h2>Projetos & Entregas</h2>
+
+                <!-- PROJECT STATUS CARDS -->
+                <div class="card-grid cols-5">
+                    <div class="card">
+                        <div class="card-label">Total</div>
+                        <div class="card-value">30</div>
+                    </div>
+                    <div class="card" style="border-color: #5a7a00;">
+                        <div class="card-label">Concluídos</div>
+                        <div class="card-value" style="color: #5a7a00;">4</div>
+                        <div class="card-note">13%</div>
+                    </div>
+                    <div class="card" style="border-color: var(--sb);">
+                        <div class="card-label">Em Andamento</div>
+                        <div class="card-value" style="color: var(--sb);">15</div>
+                        <div class="card-note">50%</div>
+                    </div>
+                    <div class="card" style="border-color: var(--cg);">
+                        <div class="card-label">Pendentes</div>
+                        <div class="card-value" style="color: var(--cg);">9</div>
+                        <div class="card-note">30%</div>
+                    </div>
+                    <div class="card warning">
+                        <div class="card-label">Atrasados</div>
+                        <div class="card-value">2</div>
+                        <div class="card-note">7%</div>
+                    </div>
+                </div>
+
+                <!-- PROJECTS CHART -->
+                <div class="chart-container" style="margin-bottom: 32px;">
+                    <div class="chart-title">Distribuição por Área e Status</div>
+                    <canvas id="chartProjects"></canvas>
+                </div>
+
+                <!-- FILTER BUTTONS -->
+                <div class="filter-buttons">
+                    <button class="filter-btn active">Todos</button>
+                    <button class="filter-btn">E-commerce</button>
+                    <button class="filter-btn">Marketing</button>
+                    <button class="filter-btn">Operações</button>
+                    <button class="filter-btn">Tech</button>
+                    <button class="filter-btn">CS</button>
+                </div>
+
+                <!-- PROJECTS TABLE -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Projeto</th>
+                                <th>Área</th>
+                                <th>Progresso</th>
+                                <th>Prazo</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Plataforma E-commerce MVP</strong></td>
+                                <td>E-commerce</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div></td>
+                                <td>31 de Março</td>
+                                <td><span class="status-badge status-complete">Concluído</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Integração Gateway Pagamentos</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div></td>
+                                <td>20 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Testes de Carga Plataforma</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div></td>
+                                <td>25 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Campanha de Lançamento (Criativo)</strong></td>
+                                <td>Marketing</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div></td>
+                                <td>25 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contrato Última Transportadora</strong></td>
+                                <td>Operações</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 40%;"></div></div></td>
+                                <td>15 de Março</td>
+                                <td><span class="status-badge status-delayed">Atrasado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Teste de Fulfillment D+1</strong></td>
+                                <td>Operações</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div></td>
+                                <td>28 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fotos Últimos 13 SKUs</strong></td>
+                                <td>E-commerce</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div></td>
+                                <td>22 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Descrições SEO (67 restantes)</strong></td>
+                                <td>E-commerce</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 55%;"></div></div></td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Registro INPI Marca</strong></td>
+                                <td>Jurídico</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div></td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Setup GA4 + BI</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div></td>
+                                <td>31 de Março</td>
+                                <td><span class="status-badge status-complete">Concluído</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Integração HubSpot CRM</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 50%;"></div></div></td>
+                                <td>25 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Chatbot L1 Setup</strong></td>
+                                <td>CS</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div></td>
+                                <td>31 de Março</td>
+                                <td><span class="status-badge status-complete">Concluído</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Podcast S1 - Gravações</strong></td>
+                                <td>Marketing</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 45%;"></div></div></td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contrato Distribuidor A</strong></td>
+                                <td>Operações</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 30%;"></div></div></td>
+                                <td>25 de Março</td>
+                                <td><span class="status-badge status-delayed">Atrasado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Manual de Marca</strong></td>
+                                <td>Marketing</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div></td>
+                                <td>15 de Março</td>
+                                <td><span class="status-badge status-complete">Concluído</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contrato Fornecedor Premium</strong></td>
+                                <td>Operações</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 20%;"></div></div></td>
+                                <td>31 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Treinamento Equipe Tech</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div></td>
+                                <td>28 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Treinamento Equipe Ops</strong></td>
+                                <td>Operações</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div></td>
+                                <td>28 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>SOP Atendimento</strong></td>
+                                <td>CS</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div></td>
+                                <td>20 de Março</td>
+                                <td><span class="status-badge status-complete">Concluído</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>SOP Fulfillment</strong></td>
+                                <td>Operações</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div></td>
+                                <td>28 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Setup Estoque (Infraestrutura)</strong></td>
+                                <td>Operações</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div></td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Integração ERP Estoque</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div></td>
+                                <td>31 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Identidade Visual Completa</strong></td>
+                                <td>Marketing</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div></td>
+                                <td>10 de Março</td>
+                                <td><span class="status-badge status-complete">Concluído</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Site Institucional</strong></td>
+                                <td>Marketing</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div></td>
+                                <td>31 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Campanhas Social Media</strong></td>
+                                <td>Marketing</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 40%;"></div></div></td>
+                                <td>31 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Parcerias Influenciadores</strong></td>
+                                <td>Marketing</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div></td>
+                                <td>25 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Documentação Tech</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 55%;"></div></div></td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Backup & Disaster Recovery</strong></td>
+                                <td>Tech</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div></td>
+                                <td>29 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Políticas Privacidade/LGPD</strong></td>
+                                <td>Jurídico</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div></td>
+                                <td>28 de Fevereiro</td>
+                                <td><span class="status-badge status-complete">Concluído</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Termos de Serviço</strong></td>
+                                <td>Jurídico</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div></td>
+                                <td>30 de Março</td>
+                                <td><span class="status-badge status-in-progress">Em Andamento</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 7: EQUIPE & OPERAÇÃO -->
+            <section id="section-7">
+                <h2>Equipe & Operação</h2>
+
+                <!-- TEAM GROWTH CHART -->
+                <div class="chart-container" style="margin-bottom: 32px;">
+                    <div class="chart-title">Plano de Crescimento: 7 → 22 → 50 Pessoas</div>
+                    <canvas id="chartTeamGrowth"></canvas>
+                </div>
+
+                <!-- CURRENT TEAM -->
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Fase 1 (2026) — 7 Pessoas</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar">RF</div>
+                        <div class="team-name">Rafael</div>
+                        <div class="team-role">CEO & Founder</div>
+                        <div class="team-dept">Estratégia</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">JC</div>
+                        <div class="team-name">João Costa</div>
+                        <div class="team-role">Dev Fullstack</div>
+                        <div class="team-dept">Tech</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">AM</div>
+                        <div class="team-name">Ana Martins</div>
+                        <div class="team-role">Analista E-commerce</div>
+                        <div class="team-dept">E-commerce</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">CS</div>
+                        <div class="team-name">Carolina Silva</div>
+                        <div class="team-role">Social Media Manager</div>
+                        <div class="team-dept">Marketing</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">LS</div>
+                        <div class="team-name">Lucas Silva</div>
+                        <div class="team-role">Designer UX/UI</div>
+                        <div class="team-dept">Marketing</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">MP</div>
+                        <div class="team-name">Marcos Pereira</div>
+                        <div class="team-role">Operador Estoque</div>
+                        <div class="team-dept">Operações</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">EC</div>
+                        <div class="team-name">Emília Costa</div>
+                        <div class="team-role">Atendente SAC</div>
+                        <div class="team-dept">CS</div>
+                    </div>
+                </div>
+
+                <!-- NEXT HIRES -->
+                <h3 style="margin-bottom: 16px; font-size: 16px; margin-top: 32px;">Próximas Contratações</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cargo</th>
+                                <th>Departamento</th>
+                                <th>Previsão</th>
+                                <th>Salário Estimado</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Head de Marketing</strong></td>
+                                <td>Marketing</td>
+                                <td>Abril 2026</td>
+                                <td>R$ 12.000</td>
+                                <td><span class="status-badge status-in-progress">Em Busca</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Videomaker</strong></td>
+                                <td>Conteúdo</td>
+                                <td>Maio 2026</td>
+                                <td>R$ 4.500</td>
+                                <td><span class="status-badge status-in-progress">Entrevistas</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>CS Especialista</strong></td>
+                                <td>Customer Success</td>
+                                <td>Junho 2026</td>
+                                <td>R$ 4.000</td>
+                                <td><span class="status-badge status-medium">Planejado</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PROCESS CARDS -->
+                <h3 style="margin-bottom: 16px; font-size: 16px; margin-top: 32px;">Processos Operacionais</h3>
+                <div class="process-cards">
+                    <div class="process-card">
+                        <div class="process-title">Ciclo do Pedido</div>
+                        <div class="process-steps">
+                            Pedido → Pagamento → Separação → Embalagem → NF-e → Expedição → Rastreio → Entrega
+                        </div>
+                        <div class="process-sla">SLA: 24h até expedição</div>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-title">Gestão de Estoque</div>
+                        <div class="process-steps">
+                            <strong>Curva A (20% SKUs):</strong> 30 dias<br>
+                            <strong>Curva B (30%):</strong> 15 dias<br>
+                            <strong>Curva C (50%):</strong> Sob demanda
+                        </div>
+                        <div class="process-sla">80% das vendas: 20% dos SKUs</div>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-title">Atendimento (SLA)</div>
+                        <div class="process-steps">
+                            <strong>L1 (60%):</strong> Chatbot → Imediato<br>
+                            <strong>L2 (35%):</strong> Humano → 2h<br>
+                            <strong>L3 (5%):</strong> Técnico → 24h
+                        </div>
+                        <div class="process-sla">Resolução em 1º contato: 80%+</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 8: ROADMAP 2026-2028 -->
+            <section id="section-8">
+                <h2>Roadmap Estratégico</h2>
+                <div class="section-subtitle">2026 — 2028</div>
+
+                <!-- TIMELINE -->
+                <div class="timeline">
+                    <div style="display: flex; margin-bottom: 24px;">
+                        <div style="flex: 0 0 140px; padding-right: 16px;"></div>
+                        <div style="flex: 1; display: flex;">
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q1'26</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--el); text-align: center; border-right: 1px solid #f0f0f0; background: rgba(202, 255, 0, 0.05);">Q2'26</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q3'26</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q4'26</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q1'27</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q2'27</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q3'27</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q4'27</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q1'28</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center; border-right: 1px solid #f0f0f0;">Q2'28</div>
+                            <div style="flex: 0 0 calc((100% - 40px) / 11); padding: 0 8px; font-size: 10px; font-weight: 600; color: var(--vb); text-align: center;">Q3'28</div>
+                        </div>
+                    </div>
+
+                    <!-- PILLARS -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="display: flex; margin-bottom: 12px;">
+                            <div style="flex: 0 0 140px; padding-right: 16px; font-size: 11px; font-weight: 600; color: var(--vb);">E-COMMERCE</div>
+                            <div style="flex: 1; display: flex; gap: 2px;">
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc(2 * (100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 9px; font-weight: 600;">Plataforma</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: 600;">ML</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 9px; font-weight: 600;">Amazon</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc(2 * (100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: 600;">App Mobile</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 9px; font-weight: 600;">PL</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 12px;">
+                            <div style="flex: 0 0 140px; padding-right: 16px; font-size: 11px; font-weight: 600; color: var(--vb);">MARKETING</div>
+                            <div style="flex: 1; display: flex; gap: 2px;">
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 9px; font-weight: 600;">Launch</div>
+                                <div style="flex: 0 0 calc(2 * (100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: 600;">Podcast S1</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 9px; font-weight: 600;">Content</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: 600;">TikTok</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 8px; font-weight: 600;">Pod S2</div>
+                                <div style="flex: 0 0 calc(3 * (100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 12px;">
+                            <div style="flex: 0 0 140px; padding-right: 16px; font-size: 11px; font-weight: 600; color: var(--vb);">OPERAÇÕES</div>
+                            <div style="flex: 1; display: flex; gap: 2px;">
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 9px; font-weight: 600;">D+1</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: 600;">CD SP</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc(2 * (100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 9px; font-weight: 600;">CDs Reg</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 12px;">
+                            <div style="flex: 0 0 140px; padding-right: 16px; font-size: 11px; font-weight: 600; color: var(--vb);">TECH</div>
+                            <div style="flex: 1; display: flex; gap: 2px;">
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc(2 * (100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 8px; font-weight: 600;">GA4 CRM Chat</div>
+                                <div style="flex: 0 0 calc(5 * (100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc(2 * (100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: 600;">App iOS/A</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 12px;">
+                            <div style="flex: 0 0 140px; padding-right: 16px; font-size: 11px; font-weight: 600; color: var(--vb);">PESSOAS</div>
+                            <div style="flex: 1; display: flex; gap: 2px;">
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 8px; font-weight: 600;">F1</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: 600;">Heads</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 8px; font-weight: 600;">Dados</div>
+                                <div style="flex: 0 0 calc(2 * (100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: 600;">F2 Exp</div>
+                                <div style="flex: 0 0 calc(4 * (100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex;">
+                            <div style="flex: 0 0 140px; padding-right: 16px; font-size: 11px; font-weight: 600; color: var(--vb);">PRODUTO</div>
+                            <div style="flex: 1; display: flex; gap: 2px;">
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 8px; font-weight: 600;">500</div>
+                                <div style="flex: 0 0 calc(5 * (100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--sb); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: 600;">3K</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; background: var(--el); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: var(--vb); font-size: 8px; font-weight: 600;">PL</div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                                <div style="flex: 0 0 calc((100% - 40px) / 11); height: 28px; border-radius: 3px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 11px; color: var(--cg); margin-top: 16px;">ESTAMOS AQUI — Q1'26 transição para Q2'26 (1º de Abril)</div>
+                </div>
+
+                <!-- MILESTONES -->
+                <h3 style="margin-top: 32px; margin-bottom: 16px; font-size: 16px;">Marcos Estratégicos</h3>
+                <div class="milestones">
+                    <div class="milestone">
+                        <div class="milestone-icon">🚀</div>
+                        <div class="milestone-date">Abr/26</div>
+                        <div class="milestone-desc">LANÇAMENTO</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-icon">📦</div>
+                        <div class="milestone-date">Jun/26</div>
+                        <div class="milestone-desc">1.000 pedidos acum.</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-icon">💰</div>
+                        <div class="milestone-date">Dez/26</div>
+                        <div class="milestone-desc">R$ 2.7M ano 1</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-icon">🤝</div>
+                        <div class="milestone-date">Jun/27</div>
+                        <div class="milestone-desc">Marketplace B2B</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-icon">📈</div>
+                        <div class="milestone-date">Dez/27</div>
+                        <div class="milestone-desc">R$ 18M ano 2</div>
+                    </div>
+                    <div class="milestone" style="border-color: var(--wo); background: rgba(255, 107, 0, 0.05);">
+                        <div class="milestone-icon">👑</div>
+                        <div class="milestone-date" style="color: var(--wo);">Dez/28</div>
+                        <div class="milestone-desc" style="color: var(--wo);">R$ 84M — LÍDER</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // ============================================
+        // EDITABLE DATA SECTION — Modify values here
+        // ============================================
+
+        const chartDefaults = {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    padding: 10,
+                    cornerRadius: 4,
+                    titleFont: { size: 12, weight: '600' },
+                    bodyFont: { size: 11 },
+                    displayColors: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    border: { display: false },
+                    ticks: { font: { size: 11 }, color: '#6B6B6B' }
+                },
+                y: {
+                    grid: { display: false },
+                    border: { display: false },
+                    ticks: { font: { size: 11 }, color: '#6B6B6B' }
+                }
+            }
+        };
+
+        // Chart 1: Faturamento Mensal
+        const ctxFaturamento = document.getElementById('chartFaturamento').getContext('2d');
+        new Chart(ctxFaturamento, {
+            type: 'bar',
+            data: {
+                labels: ['Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    label: 'Meta (R$ mil)',
+                    data: [180, 240, 300, 320, 340, 360, 360, 340, 260],
+                    backgroundColor: 'rgba(202, 255, 0, 0.3)',
+                    borderColor: '#CAFF00',
+                    borderWidth: 1,
+                    borderDash: [5, 5]
+                }]
+            },
+            options: {
+                ...chartDefaults,
+                plugins: {
+                    ...chartDefaults.plugins,
+                    filler: { propagate: true }
+                }
+            }
+        });
+
+        // Chart 2: Preparação
+        const ctxPreparacao = document.getElementById('chartPreparacao').getContext('2d');
+        new Chart(ctxPreparacao, {
+            type: 'barh',
+            data: {
+                labels: ['Infraestrutura Tech', 'Marketing & Brand', 'Operações & Logística', 'Produto & Catálogo', 'Equipe & RH', 'Jurídico & Compliance'],
+                datasets: [{
+                    label: 'Progresso (%)',
+                    data: [85, 90, 75, 78, 100, 70],
+                    backgroundColor: function(context) {
+                        const value = context.dataset.data[context.dataIndex];
+                        if (value >= 90) return '#CAFF00';
+                        if (value >= 75) return '#2D4659';
+                        return '#FF6B00';
+                    },
+                    borderRadius: 3,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                ...chartDefaults,
+                scales: {
+                    x: {
+                        max: 100,
+                        ...chartDefaults.scales.x
+                    },
+                    y: {
+                        ...chartDefaults.scales.y
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Growth Rate
+        const ctxGrowth = document.getElementById('chartGrowth').getContext('2d');
+        new Chart(ctxGrowth, {
+            type: 'barh',
+            data: {
+                labels: ['Autopeças Geral', 'Mobilidade Elétrica Global', 'E-bikes Brasil'],
+                datasets: [{
+                    label: 'CAGR (%)',
+                    data: [5, 14.4, 8.5],
+                    backgroundColor: ['#6B6B6B', '#CAFF00', '#CAFF00'],
+                    borderRadius: 3,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                ...chartDefaults,
+                scales: {
+                    x: {
+                        max: 16,
+                        ...chartDefaults.scales.x
+                    },
+                    y: {
+                        ...chartDefaults.scales.y
+                    }
+                }
+            }
+        });
+
+        // Chart 4: Trajectory
+        const ctxTrajectory = document.getElementById('chartTrajectory').getContext('2d');
+        new Chart(ctxTrajectory, {
+            type: 'bar',
+            data: {
+                labels: ['2026', '2027', '2028'],
+                datasets: [{
+                    label: 'Faturamento (R$ M)',
+                    data: [2.7, 18, 84],
+                    backgroundColor: ['#CAFF00', '#2D4659', '#CAFF00'],
+                    borderRadius: 4,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                ...chartDefaults,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { callback: v => v + 'M', ...chartDefaults.scales.y.ticks },
+                        ...chartDefaults.scales.y
+                    },
+                    x: chartDefaults.scales.x
+                }
+            }
+        });
+
+        // Chart 5: Rampup
+        const ctxRampup = document.getElementById('chartRampup').getContext('2d');
+        new Chart(ctxRampup, {
+            type: 'line',
+            data: {
+                labels: ['Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    label: 'Faturamento (R$ mil)',
+                    data: [180, 240, 300, 320, 340, 360, 360, 340, 260],
+                    borderColor: '#CAFF00',
+                    backgroundColor: 'rgba(202, 255, 0, 0.15)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#CAFF00',
+                    pointBorderColor: '#0A0A0A',
+                    pointBorderWidth: 2,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                ...chartDefaults,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ...chartDefaults.scales.y
+                    },
+                    x: chartDefaults.scales.x
+                }
+            }
+        });
+
+        // Chart 6: Marketing Allocation
+        const ctxAllocation = document.getElementById('chartAllocation').getContext('2d');
+        new Chart(ctxAllocation, {
+            type: 'doughnut',
+            data: {
+                labels: ['Meta Ads', 'Google Ads', 'Influenciadores', 'TikTok', 'Conteúdo/SEO', 'Podcast', 'WhatsApp', 'Email'],
+                datasets: [{
+                    data: [4500, 3500, 2000, 1500, 1000, 800, 400, 300],
+                    backgroundColor: ['#CAFF00', '#2D4659', '#6B6B6B', '#FF6B00', '#CAFF00', '#2D4659', '#CAFF00', '#2D4659'],
+                    borderColor: '#F5F5F3',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { font: { size: 11 }, color: '#333', padding: 12 }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = ((value / total) * 100).toFixed(0);
+                                return label + ': R$ ' + value + ' (' + percent + '%)';
+                            }
+                        },
+                        ...chartDefaults.plugins.tooltip
+                    }
+                }
+            }
+        });
+
+        // Chart 7: ROAS
+        const ctxRoas = document.getElementById('chartRoas').getContext('2d');
+        new Chart(ctxRoas, {
+            type: 'barh',
+            data: {
+                labels: ['WhatsApp', 'Email', 'Google Ads', 'Conteúdo/SEO', 'Meta Ads', 'Influenciadores', 'Podcast', 'TikTok'],
+                datasets: [{
+                    label: 'ROAS',
+                    data: [12, 10, 6, 5, 4, 3.5, 3, 2.5],
+                    backgroundColor: function(context) {
+                        const value = context.dataset.data[context.dataIndex];
+                        if (value >= 10) return '#CAFF00';
+                        if (value >= 5) return '#6B6B6B';
+                        return '#FF6B00';
+                    },
+                    borderRadius: 3,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                ...chartDefaults,
+                scales: {
+                    x: {
+                        max: 13,
+                        ...chartDefaults.scales.x
+                    },
+                    y: {
+                        ...chartDefaults.scales.y
+                    }
+                }
+            }
+        });
+
+        // Chart 8: Conversion Rate
+        const ctxConversion = document.getElementById('chartConversion').getContext('2d');
+        new Chart(ctxConversion, {
+            type: 'line',
+            data: {
+                labels: ['Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set'],
+                datasets: [{
+                    label: 'Taxa de Conversão (%)',
+                    data: [1.5, 1.8, 2.0, 2.2, 2.4, 2.5],
+                    borderColor: '#CAFF00',
+                    backgroundColor: 'rgba(202, 255, 0, 0.15)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#CAFF00',
+                    pointBorderColor: '#0A0A0A',
+                    pointBorderWidth: 2,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                ...chartDefaults,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 3,
+                        ticks: { callback: v => v.toFixed(1) + '%', ...chartDefaults.scales.y.ticks },
+                        ...chartDefaults.scales.y
+                    },
+                    x: chartDefaults.scales.x
+                }
+            }
+        });
+
+        // Chart 9: Projects Distribution
+        const ctxProjects = document.getElementById('chartProjects').getContext('2d');
+        new Chart(ctxProjects, {
+            type: 'bar',
+            data: {
+                labels: ['E-commerce', 'Marketing', 'Operações', 'Tech', 'CS'],
+                datasets: [
+                    {
+                        label: 'Concluído',
+                        data: [1, 1, 0, 0, 2],
+                        backgroundColor: '#5a7a00'
+                    },
+                    {
+                        label: 'Em Andamento',
+                        data: [3, 3, 4, 3, 2],
+                        backgroundColor: '#2D4659'
+                    },
+                    {
+                        label: 'Pendente',
+                        data: [4, 2, 1, 2, 0],
+                        backgroundColor: '#6B6B6B'
+                    },
+                    {
+                        label: 'Atrasado',
+                        data: [0, 0, 2, 0, 0],
+                        backgroundColor: '#FF6B00'
+                    }
+                ]
+            },
+            options: {
+                ...chartDefaults,
+                scales: {
+                    x: chartDefaults.scales.x,
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        ...chartDefaults.scales.y
+                    }
+                },
+                plugins: {
+                    ...chartDefaults.plugins,
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: { font: { size: 11 }, color: '#333', padding: 12 }
+                    }
+                }
+            }
+        });
+
+        // Chart 10: Team Growth
+        const ctxTeamGrowth = document.getElementById('chartTeamGrowth').getContext('2d');
+        new Chart(ctxTeamGrowth, {
+            type: 'bar',
+            data: {
+                labels: ['2026 (Fase 1)', '2027 (Fase 2)', '2028 (Fase 3)'],
+                datasets: [{
+                    label: 'Número de Pessoas',
+                    data: [7, 22, 50],
+                    backgroundColor: ['#CAFF00', '#2D4659', '#CAFF00'],
+                    borderRadius: 4,
+                    borderWidth: 0,
+                    yAxisID: 'y'
+                }, {
+                    label: 'Custo Mensal (R$ K)',
+                    data: [58, 155, 380],
+                    backgroundColor: 'rgba(202, 255, 0, 0.2)',
+                    borderColor: '#CAFF00',
+                    borderWidth: 2,
+                    type: 'line',
+                    yAxisID: 'y1',
+                    pointBackgroundColor: '#CAFF00',
+                    pointBorderColor: '#0A0A0A',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: { font: { size: 11 }, color: '#333', padding: 12 }
+                    },
+                    tooltip: chartDefaults.plugins.tooltip
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        beginAtZero: true,
+                        ticks: { font: { size: 11 }, color: '#6B6B6B' },
+                        grid: { display: false },
+                        border: { display: false }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        beginAtZero: true,
+                        ticks: { font: { size: 11 }, color: '#6B6B6B' },
+                        grid: { display: false },
+                        border: { display: false }
+                    },
+                    x: chartDefaults.scales.x
+                }
+            }
+        });
+
+        // ============================================
+        // NAVIGATION & SCROLL SPY
+        // ============================================
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = document.getElementById(this.dataset.section);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

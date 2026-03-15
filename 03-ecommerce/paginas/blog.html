@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Help Peças | Dicas e Novidades de Mobilidade Elétrica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vb: #0A0A0A;
+            --el: #CAFF00;
+            --cg: #6B6B6B;
+            --sb: #2D4659;
+            --ow: #F5F5F3;
+            --dc: #1A1A1A;
+            --wo: #FF6B00;
+        }
+
+        body {
+            background-color: var(--vb);
+            color: var(--ow);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* SLOGAN BAR */
+        .slogan-bar {
+            background-color: var(--el);
+            color: var(--vb);
+            text-align: center;
+            padding: 12px 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        /* HEADER / NAV */
+        header {
+            background-color: var(--dc);
+            border-bottom: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--el);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            flex: 1;
+        }
+
+        nav a {
+            color: var(--ow);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--el);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--ow);
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            color: var(--el);
+        }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--cg);
+            display: flex;
+            gap: 8px;
+        }
+
+        .breadcrumb a {
+            color: var(--el);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--ow);
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1200px;
+            margin: 60px auto 80px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: var(--cg);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* CATEGORY FILTERS */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 60px;
+        }
+
+        .filter-chip {
+            padding: 10px 20px;
+            border: 1px solid var(--cg);
+            background-color: transparent;
+            color: var(--ow);
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+            border-color: var(--el);
+            background-color: var(--el);
+            color: var(--vb);
+        }
+
+        /* FEATURED POST */
+        .featured-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background-color: var(--dc);
+            border: 1px solid rgba(202, 255, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, #2D4659 0%, #1A1A1A 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .featured-image svg {
+            width: 120px;
+            height: 120px;
+            opacity: 0.3;
+        }
+
+        .featured-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .post-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 16px;
+        }
+
+        .tag-guides {
+            background-color: rgba(202, 255, 0, 0.15);
+            color: var(--el);
+        }
+
+        .featured-content h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 28px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            color: var(--cg);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .post-excerpt {
+            font-size: 15px;
+            color: var(--ow);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .btn-read-more {
+            align-self: flex-start;
+            padding: 12px 28px;
+            background-color: var(--el);
+            color: var(--vb);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-read-more:hover {
+            background-color: var(--ow);
+            transform: translateX(4px);
+        }
+
+        /* BLOG GRID */
+        .blog-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: var(--dc);
+            border: 1px solid rgba(202, 255, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            border-color: var(--el);
+            transform: translateY(-4px);
+        }
+
+        .card-image {
+            background: linear-gradient(135deg, #2D4659 0%, #1A1A1A 100%);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-image svg {
+            width: 80px;
+            height: 80px;
+            opacity: 0.25;
+        }
+
+        .card-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 5px 11px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 12px;
+        }
+
+        .tag-manutencao {
+            background-color: rgba(255, 107, 0, 0.15);
+            color: var(--wo);
+        }
+
+        .tag-dicas {
+            background-color: rgba(202, 255, 0, 0.15);
+            color: var(--el);
+        }
+
+        .tag-comparativo {
+            background-color: rgba(45, 70, 89, 0.5);
+            color: #64B5F6;
+        }
+
+        .tag-novidades {
+            background-color: rgba(202, 255, 0, 0.15);
+            color: var(--el);
+        }
+
+        .tag-seguranca {
+            background-color: rgba(255, 107, 0, 0.15);
+            color: var(--wo);
+        }
+
+        .card-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .card-excerpt {
+            font-size: 13px;
+            color: var(--cg);
+            margin-bottom: 16px;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            font-size: 12px;
+            color: var(--cg);
+        }
+
+        .card-link {
+            color: var(--el);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: var(--ow);
+        }
+
+        /* NEWSLETTER */
+        .newsletter-section {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .newsletter {
+            background-color: var(--dc);
+            border: 1px solid rgba(202, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .newsletter p {
+            color: var(--cg);
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 16px;
+            background-color: rgba(202, 255, 0, 0.05);
+            border: 1px solid rgba(202, 255, 0, 0.2);
+            border-radius: 4px;
+            color: var(--ow);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--cg);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--el);
+        }
+
+        .newsletter-form button {
+            padding: 12px 28px;
+            background-color: var(--el);
+            color: var(--vb);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-family: 'Rajdhani', sans-serif;
+            white-space: nowrap;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--ow);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--dc);
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 60px 20px 0;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--el);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: var(--ow);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--el);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 0;
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--cg);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            nav {
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                min-height: 250px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero .subtitle {
+                font-size: 14px;
+            }
+
+            .featured-content {
+                padding: 24px;
+            }
+
+            .featured-content h2 {
+                font-size: 20px;
+            }
+
+            .card-content {
+                padding: 16px;
+            }
+
+            .newsletter {
+                padding: 30px 20px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slogan-bar">
+        O rolê não pode parar! ∞
+    </div>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Help Peças</a>
+            <ul>
+                <li><a href="categoria.html">Categorias</a></li>
+                <li><a href="quem-somos.html">Quem Somos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                </button>
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </button>
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Blog</span>
+    </div>
+
+    <section class="hero">
+        <h1>BLOG HELP</h1>
+        <p class="subtitle">Dicas, novidades e tudo sobre mobilidade elétrica</p>
+
+        <div class="category-filters">
+            <button class="filter-chip active">Todos</button>
+            <button class="filter-chip">Manutenção</button>
+            <button class="filter-chip">Dicas</button>
+            <button class="filter-chip">Guias</button>
+            <button class="filter-chip">Comparativo</button>
+            <button class="filter-chip">Novidades</button>
+            <button class="filter-chip">Segurança</button>
+        </div>
+    </section>
+
+    <section class="featured-section">
+        <div class="featured-post">
+            <div class="featured-image">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+            </div>
+            <div class="featured-content">
+                <span class="post-tag tag-guides">Guias</span>
+                <h2>Como Escolher o Pneu Certo para Seu Patinete Elétrico</h2>
+                <div class="post-meta">
+                    <span>Equipe Help</span>
+                    <span>28 de fevereiro, 2025</span>
+                    <span>5 min de leitura</span>
+                </div>
+                <p class="post-excerpt">
+                    Escolher o pneu adequado é fundamental para garantir segurança, conforto e durabilidade do seu patinete. Neste guia completo, você aprenderá sobre os diferentes tipos de pneus, suas características e como identificar qual é o melhor para seu estilo de rolê.
+                </p>
+                <button class="btn-read-more">Ler mais →</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-section">
+        <div class="blog-grid">
+            <article class="blog-card">
+                <div class="card-image">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path></svg>
+                </div>
+                <div class="card-content">
+                    <span class="post-tag tag-manutencao">Manutenção</span>
+                    <h3 class="card-title">Manutenção Preventiva: 5 Dicas Essenciais</h3>
+                    <p class="card-excerpt">
+                        Aprenda as cinco práticas fundamentais para manter seu patinete ou bike elétrica funcionando perfeitamente por mais tempo.
+                    </p>
+                    <div class="card-footer">
+                        <span>15 min</span>
+                        <a href="#" class="card-link">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><path d="M16 4l-4-2-4 2"></path></svg>
+                </div>
+                <div class="card-content">
+                    <span class="post-tag tag-dicas">Dicas</span>
+                    <h3 class="card-title">Bateria: Como Prolongar a Vida Útil</h3>
+                    <p class="card-excerpt">
+                        Descubra as melhores práticas para carregar e armazenar sua bateria de forma segura e aumentar sua durabilidade.
+                    </p>
+                    <div class="card-footer">
+                        <span>8 min</span>
+                        <a href="#" class="card-link">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image">
+                    <svg viewBox="0 0 24 24"><path d="M9 19c-4.286 0-8-1.954-8-4.5S4.714 10 9 10c.966 0 1.911.108 2.821.327m5.464 2.783C20.427 12.776 22 13.864 22 15.5 22 18.038 17.582 20 12 20"></path><path d="M9 13v2m3-2v2m3-2v2"></path></svg>
+                </div>
+                <div class="card-content">
+                    <span class="post-tag tag-dicas">Guias</span>
+                    <h3 class="card-title">Guia de Compatibilidade de Peças Help</h3>
+                    <p class="card-excerpt">
+                        Confira qual peça Help é compatível com seu modelo de patinete ou bike. Tabela completa com todas as informações.
+                    </p>
+                    <div class="card-footer">
+                        <span>12 min</span>
+                        <a href="#" class="card-link">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image">
+                    <svg viewBox="0 0 24 24"><path d="M9 7h-3a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3m0-16v16m6-16c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2h-3m0-16v16"></path></svg>
+                </div>
+                <div class="card-content">
+                    <span class="post-tag tag-comparativo">Comparativo</span>
+                    <h3 class="card-title">Patinete vs Bike Elétrica: Qual Escolher?</h3>
+                    <p class="card-excerpt">
+                        Análise detalhada das vantagens e desvantagens de cada opção para ajudar você a tomar a melhor decisão.
+                    </p>
+                    <div class="card-footer">
+                        <span>10 min</span>
+                        <a href="#" class="card-link">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <div class="card-content">
+                    <span class="post-tag tag-novidades">Novidades</span>
+                    <h3 class="card-title">Novidades Help 2025: O Que Vem Por Aí</h3>
+                    <p class="card-excerpt">
+                        Conheça os lançamentos exclusivos da Help Peças para este ano. Inovação, qualidade e muito mais rolê garantido.
+                    </p>
+                    <div class="card-footer">
+                        <span>7 min</span>
+                        <a href="#" class="card-link">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="card-image">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8C4 5.5 7.58 2 12 2s8 3.5 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+                </div>
+                <div class="card-content">
+                    <span class="post-tag tag-manutencao">Segurança</span>
+                    <h3 class="card-title">Segurança no Trânsito com Scooter Elétrica</h3>
+                    <p class="card-excerpt">
+                        Dicas essenciais para andar com segurança na cidade. Equipamentos recomendados, técnicas e comportamentos preventivos.
+                    </p>
+                    <div class="card-footer">
+                        <span>11 min</span>
+                        <a href="#" class="card-link">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="newsletter-section">
+        <div class="newsletter">
+            <h2>ENTRE PRO ROLÊ</h2>
+            <p>Receba dicas exclusivas, novidades e promoções da Help direto no seu email</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="seu@email.com" required>
+                <button type="submit">Inscrever</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Categorias</h3>
+                <ul>
+                    <li><a href="categoria.html">Pneus e Câmaras</a></li>
+                    <li><a href="categoria.html">Freios e Discos</a></li>
+                    <li><a href="categoria.html">Baterias</a></li>
+                    <li><a href="categoria.html">Motores</a></li>
+                    <li><a href="categoria.html">Acessórios</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Empresa</h3>
+                <ul>
+                    <li><a href="quem-somos.html">Quem Somos</a></li>
+                    <li><a href="contato.html">Entre em Contato</a></li>
+                    <li><a href="rastreamento.html">Rastreamento</a></li>
+                    <li><a href="faq.html">Perguntas Frequentes</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Suporte</h3>
+                <ul>
+                    <li><a href="politicas.html">Política de Privacidade</a></li>
+                    <li><a href="politicas.html">Termos de Uso</a></li>
+                    <li><a href="politicas.html">Trocas e Devoluções</a></li>
+                    <li><a href="politicas.html">Política de Frete</a></li>
+                    <li><a href="contato.html">Suporte ao Cliente</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Conecte-se</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Help Peças. Todos os direitos reservados.</p>
+            <p>Desenvolvido com <span style="color: var(--el);">∞</span> para o rolê</p>
+        </div>
+    </footer>
+</body>
+</html>

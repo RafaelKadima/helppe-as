@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help Peças — Paralama Dianteiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--vb:#0A0A0A;--el:#CAFF00;--cg:#6B6B6B;--sb:#2D4659;--ow:#F5F5F3;--dc:#1A1A1A;--wo:#FF6B00}
+body{background:var(--vb);color:var(--ow);font-family:'Inter',system-ui,sans-serif}
+
+/* NAV */
+.nav{background:var(--vb);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(202,255,0,0.1)}
+.nav-brand{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:var(--el);text-transform:uppercase;letter-spacing:1px;text-decoration:none}
+.nav-links{display:flex;gap:24px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--cg)}
+.nav-links span:hover{color:var(--el);cursor:pointer}
+.nav-actions{display:flex;gap:14px;align-items:center}
+.nav-cart{background:var(--el);color:var(--vb);padding:7px 18px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;cursor:pointer}
+
+/* BREADCRUMB */
+.breadcrumb{padding:14px 48px;font-size:12px;color:var(--cg);border-bottom:1px solid rgba(255,255,255,0.04)}
+.breadcrumb span{cursor:pointer}.breadcrumb span:hover{color:var(--el)}
+.breadcrumb .sep{margin:0 8px;opacity:0.4}
+
+/* PRODUCT LAYOUT */
+.product-page{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:calc(100vh - 100px)}
+
+/* LEFT - IMAGE */
+.product-gallery{padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:var(--dc)}
+.product-gallery .badges{position:absolute;top:20px;left:20px;display:flex;flex-direction:column;gap:8px}
+.badge{padding:5px 14px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.badge-new{background:var(--el);color:var(--vb)}
+.badge-fab{border:1px solid var(--el);color:var(--el)}
+.main-image{max-width:100%;max-height:500px;object-fit:contain;transition:transform 0.3s}
+.main-image:hover{transform:scale(1.05)}
+.thumb-row{display:flex;gap:10px;margin-top:24px}
+.thumb{width:64px;height:64px;border:2px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:border-color 0.2s}
+.thumb:hover,.thumb.active{border-color:var(--el)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+
+/* RIGHT - INFO */
+.product-info{padding:40px 48px;display:flex;flex-direction:column;justify-content:center}
+.product-cat{font-family:'Inter',sans-serif;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:var(--el);margin-bottom:8px}
+.product-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:36px;text-transform:uppercase;line-height:1.1;letter-spacing:-0.5px;margin-bottom:6px}
+.product-sku{font-size:11px;color:var(--cg);margin-bottom:20px;font-weight:500;letter-spacing:1px}
+
+.product-rating{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.stars{color:var(--el);font-size:16px;letter-spacing:2px}
+.rating-text{font-size:12px;color:var(--cg)}
+
+.product-price-box{background:var(--dc);border:1px solid rgba(202,255,0,0.1);padding:20px;margin-bottom:24px}
+.price-row{display:flex;align-items:baseline;gap:12px}
+.price-current{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:36px;color:var(--el)}
+.price-old{font-size:16px;color:var(--cg);text-decoration:line-through}
+.price-discount{background:var(--wo);color:var(--vb);padding:3px 10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase}
+.price-installment{font-size:13px;color:var(--cg);margin-top:8px}
+.price-installment strong{color:var(--ow)}
+
+.product-desc{font-size:14px;line-height:1.8;color:var(--cg);margin-bottom:24px;max-width:480px}
+
+/* VARIANTS */
+.variant-label{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--ow);margin-bottom:10px}
+.color-options{display:flex;gap:10px;margin-bottom:24px}
+.color-opt{width:36px;height:36px;border:2px solid rgba(255,255,255,0.1);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.color-opt:hover,.color-opt.active{border-color:var(--el);transform:scale(1.1)}
+.color-opt.active::after{content:'✓';color:#fff;font-size:14px;font-weight:700;text-shadow:0 0 3px rgba(0,0,0,0.5)}
+
+/* BUTTONS */
+.btn-primary{display:block;width:100%;background:var(--el);color:var(--vb);text-align:center;padding:16px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.2s;margin-bottom:10px}
+.btn-primary:hover{background:#b8e600;transform:translateY(-1px)}
+.btn-secondary{display:block;width:100%;border:2px solid var(--el);color:var(--el);background:transparent;text-align:center;padding:14px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all 0.2s}
+.btn-secondary:hover{background:rgba(202,255,0,0.05)}
+
+/* TRUST */
+.trust-bar{display:flex;gap:20px;margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06)}
+.trust-item{display:flex;align-items:center;gap:8px}
+.trust-icon{color:var(--el)}
+.trust-text{font-size:11px;color:var(--cg);line-height:1.4}
+.trust-text strong{color:var(--ow);display:block;font-size:12px}
+
+/* SPECS */
+.specs-section{grid-column:1/-1;padding:60px 48px;border-top:1px solid rgba(255,255,255,0.06)}
+.specs-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:28px;text-transform:uppercase;margin-bottom:28px}
+.specs-title span{color:var(--el)}
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.spec-row{display:flex;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.spec-row:nth-child(odd){background:rgba(255,255,255,0.02)}
+.spec-label{font-size:13px;color:var(--cg);font-weight:500}
+.spec-value{font-size:13px;color:var(--ow);font-weight:600;text-align:right}
+
+/* RELATED */
+.related-section{grid-column:1/-1;padding:60px 48px;border-top:1px solid rgba(255,255,255,0.06);background:var(--dc)}
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}
+.related-card{background:var(--vb);border:1px solid rgba(255,255,255,0.06);overflow:hidden;transition:all 0.25s}
+.related-card:hover{border-color:var(--el);transform:translateY(-3px)}
+.related-img{height:160px;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(255,255,255,0.02)}
+.related-info{padding:16px}
+.related-name{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;text-transform:uppercase;margin-bottom:4px}
+.related-desc{font-size:11px;color:var(--cg);margin-bottom:10px}
+.related-price{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:var(--el)}
+.related-btn{display:block;background:var(--el);color:var(--vb);text-align:center;padding:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:12px;cursor:pointer;border:none}
+
+/* BANNER CTA */
+.cta-banner{grid-column:1/-1;padding:40px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(202,255,0,0.1);position:relative;overflow:hidden}
+.cta-banner::after{content:'';position:absolute;right:-30px;top:-30px;width:200px;height:200px;background:var(--el);opacity:0.04;transform:rotate(45deg)}
+
+/* FOOTER */
+.footer{padding:40px 48px;border-top:1px solid rgba(202,255,0,0.1);display:flex;justify-content:space-between;align-items:center}
+.footer-brand{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:20px;color:var(--el);text-transform:uppercase}
+.footer-text{font-size:11px;color:var(--cg);text-align:right;line-height:1.6}
+
+/* SLOGAN BAR */
+.slogan-bar{background:var(--el);color:var(--vb);text-align:center;padding:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:2px}
+
+@media(max-width:900px){
+  .product-page{grid-template-columns:1fr}
+  .nav{padding:10px 20px}.nav-links{display:none}
+  .product-gallery,.product-info{padding:24px 20px}
+  .specs-section,.related-section,.cta-banner{padding:40px 20px}
+  .specs-grid{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SLOGAN BAR -->
+<div class="slogan-bar">O rolê não pode parar! ∞ — Frete grátis acima de R$ 199</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">Help Peças</a>
+  <div class="nav-links">
+    <span>Scooters</span>
+    <span>Bikes</span>
+    <span>Peças</span>
+    <span style="color:var(--el)">Faça um Help!</span>
+    <span>Comunidade</span>
+  </div>
+  <div class="nav-actions">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <div class="nav-cart">Faça um Help! (0)</div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <span>Home</span><span class="sep">›</span>
+  <span>Scooters</span><span class="sep">›</span>
+  <span>Carenagem</span><span class="sep">›</span>
+  <span style="color:var(--ow)">Paralama Dianteiro Azul</span>
+</div>
+
+<!-- PRODUCT PAGE -->
+<div class="product-page">
+
+  <!-- LEFT - GALLERY -->
+  <div class="product-gallery">
+    <div class="badges">
+      <div class="badge badge-new">Novo</div>
+      <div class="badge badge-fab">Fabricante ✓</div>
+    </div>
+    <img src="paralama-sem-fundo.png" alt="Paralama Dianteiro Azul — Help Peças" class="main-image">
+    <div class="thumb-row">
+      <div class="thumb active"><img src="paralama-sem-fundo.png" alt="Vista frontal"></div>
+      <div class="thumb" style="background:var(--vb)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <div class="thumb" style="background:var(--vb)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <div class="thumb" style="background:var(--vb)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT - INFO -->
+  <div class="product-info">
+    <div class="product-cat">∞ Rolê Infinito · Carenagem</div>
+    <h1 class="product-name">Paralama Dianteiro <span style="color:var(--el)">Azul Royal</span></h1>
+    <div class="product-sku">SKU: HLP-PLM-AZL-001 · REF: Help Original</div>
+
+    <div class="product-rating">
+      <div class="stars">★★★★★</div>
+      <div class="rating-text">4.9 (47 avaliações) · 128 vendidos</div>
+    </div>
+
+    <div class="product-price-box">
+      <div class="price-row">
+        <span class="price-current">R$ 89,90</span>
+        <span class="price-old">R$ 129,90</span>
+        <span class="price-discount">-31% OFF</span>
+      </div>
+      <div class="price-installment">ou <strong>12x de R$ 7,49</strong> sem juros no cartão</div>
+    </div>
+
+    <p class="product-desc">Paralama dianteiro em ABS de alta resistência, acabamento brilhante azul royal. Peça original de fabricante Help — encaixe perfeito, sem adaptações. Testado em condições reais de uso urbano.</p>
+
+    <div class="variant-label">Cor disponível</div>
+    <div class="color-options">
+      <div class="color-opt active" style="background:#1a3a8a" title="Azul Royal"></div>
+      <div class="color-opt" style="background:#0A0A0A" title="Preto"></div>
+      <div class="color-opt" style="background:#F5F5F3" title="Branco"></div>
+      <div class="color-opt" style="background:#cc0000" title="Vermelho"></div>
+    </div>
+
+    <button class="btn-primary">FAÇA UM HELP!</button>
+    <button class="btn-secondary">Ver compatibilidade do veículo</button>
+
+    <div class="trust-bar">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CAFF00" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="trust-text"><strong>Fabricante</strong>Peça original Help</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CAFF00" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="trust-text"><strong>Frete Grátis</strong>Para todo Brasil</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CAFF00" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </div>
+        <div class="trust-text"><strong>Garantia</strong>6 meses Help</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPECS -->
+  <div class="specs-section">
+    <h2 class="specs-title">ESPECIFICAÇÕES <span>TÉCNICAS</span></h2>
+    <div class="specs-grid">
+      <div>
+        <div class="spec-row"><span class="spec-label">Material</span><span class="spec-value">ABS Alta Resistência</span></div>
+        <div class="spec-row"><span class="spec-label">Acabamento</span><span class="spec-value">Brilhante (Gloss)</span></div>
+        <div class="spec-row"><span class="spec-label">Cor</span><span class="spec-value">Azul Royal</span></div>
+        <div class="spec-row"><span class="spec-label">Posição</span><span class="spec-value">Dianteiro</span></div>
+        <div class="spec-row"><span class="spec-label">Peso</span><span class="spec-value">320g</span></div>
+      </div>
+      <div>
+        <div class="spec-row"><span class="spec-label">Tipo</span><span class="spec-value">Original de Fabricante</span></div>
+        <div class="spec-row"><span class="spec-label">Compatibilidade</span><span class="spec-value">Scooters Elétricas</span></div>
+        <div class="spec-row"><span class="spec-label">Instalação</span><span class="spec-value">Encaixe direto (Plug & Play)</span></div>
+        <div class="spec-row"><span class="spec-label">Garantia</span><span class="spec-value">6 meses</span></div>
+        <div class="spec-row"><span class="spec-label">Origem</span><span class="spec-value">Help Peças — Fabricante</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <div style="z-index:1">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:var(--wo);margin-bottom:6px">∞ Rolê Infinito — Promoção</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:24px;text-transform:uppercase;line-height:1.1">Compre 2 peças de carenagem e ganhe <span style="color:var(--el)">10% de desconto!</span></div>
+    </div>
+    <div style="z-index:1;background:var(--el);color:var(--vb);padding:14px 32px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;flex-shrink:0;cursor:pointer">Faça um Help!</div>
+  </div>
+
+  <!-- RELATED -->
+  <div class="related-section">
+    <h2 class="specs-title">QUEM LEVOU ESSE, <span>TAMBÉM CURTIU</span></h2>
+    <div class="related-grid">
+      <div class="related-card">
+        <div class="related-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#CAFF00" stroke-width="1.5" opacity="0.3"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+        </div>
+        <div class="related-info">
+          <div class="related-name">Farol LED 12V</div>
+          <div class="related-desc">Alta potência · Universal</div>
+          <div class="related-price">R$ 79,90</div>
+          <div class="related-btn">Faça um Help!</div>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#CAFF00" stroke-width="1.5" opacity="0.3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div class="related-info">
+          <div class="related-name">Freio a Disco 140mm</div>
+          <div class="related-desc">Mecânico · Help Original</div>
+          <div class="related-price">R$ 59,90</div>
+          <div class="related-btn">Faça um Help!</div>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#CAFF00" stroke-width="1.5" opacity="0.3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>
+        </div>
+        <div class="related-info">
+          <div class="related-name">Pneu 10" Scooter</div>
+          <div class="related-desc">Tubeless · Resistente</div>
+          <div class="related-price">R$ 69,90</div>
+          <div class="related-btn">Faça um Help!</div>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#CAFF00" stroke-width="1.5" opacity="0.3"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="related-info">
+          <div class="related-name">Kit Parafusos</div>
+          <div class="related-desc">Inox · Carenagem</div>
+          <div class="related-price">R$ 24,90</div>
+          <div class="related-btn">Faça um Help!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">HELP PEÇAS ⚡</div>
+  <div class="footer-text">O rolê não pode parar! ∞<br>helppecas.com.br · @helppecas</div>
+</div>
+
+</body>
+</html>

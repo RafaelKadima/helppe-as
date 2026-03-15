@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Help Peças | Perguntas Frequentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vb: #0A0A0A;
+            --el: #CAFF00;
+            --cg: #6B6B6B;
+            --sb: #2D4659;
+            --ow: #F5F5F3;
+            --dc: #1A1A1A;
+            --wo: #FF6B00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--vb);
+            color: var(--ow);
+            line-height: 1.6;
+        }
+
+        /* SLOGAN BAR */
+        .slogan-bar {
+            background-color: var(--el);
+            color: var(--vb);
+            text-align: center;
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background-color: var(--dc);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(202, 255, 0, 0.1);
+        }
+
+        .nav-brand {
+            font-family: 'Rajdhani', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--el);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--ow);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--el);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--ow);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.3s ease;
+        }
+
+        .icon-btn:hover svg {
+            stroke: var(--el);
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 12px 20px;
+            font-size: 12px;
+            color: var(--cg);
+            border-bottom: 1px solid rgba(202, 255, 0, 0.05);
+        }
+
+        .breadcrumb a {
+            color: var(--cg);
+            text-decoration: none;
+            margin: 0 4px;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--el);
+        }
+
+        /* HERO */
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(202, 255, 0, 0.05) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(202, 255, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-family: 'Rajdhani', monospace;
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--el);
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--ow);
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        /* SEARCH BOX */
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            background-color: rgba(202, 255, 0, 0.08);
+            border: 2px solid rgba(202, 255, 0, 0.2);
+            border-radius: 4px;
+            color: var(--ow);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input::placeholder {
+            color: var(--cg);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--el);
+            background-color: rgba(202, 255, 0, 0.12);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: var(--cg);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* CATEGORIES TABS */
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .categories-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 48px;
+            border-bottom: 2px solid rgba(202, 255, 0, 0.1);
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            background: none;
+            border: none;
+            color: var(--cg);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 12px 0;
+            margin-bottom: -2px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .category-tab:hover {
+            color: var(--el);
+        }
+
+        .category-tab.active {
+            color: var(--el);
+            border-bottom-color: var(--el);
+        }
+
+        /* ACCORDION */
+        .faq-accordion {
+            display: none;
+        }
+
+        .faq-accordion.active {
+            display: block;
+        }
+
+        .faq-item {
+            margin-bottom: 16px;
+        }
+
+        .faq-item details {
+            background-color: rgba(45, 70, 89, 0.1);
+            border: 1px solid rgba(202, 255, 0, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item details:hover {
+            background-color: rgba(45, 70, 89, 0.15);
+            border-color: rgba(202, 255, 0, 0.2);
+        }
+
+        .faq-item details[open] {
+            background-color: rgba(202, 255, 0, 0.05);
+            border-color: rgba(202, 255, 0, 0.2);
+        }
+
+        .faq-item summary {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--ow);
+            font-size: 14px;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, var(--el) 0%, var(--el) 100%);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            margin-left: 12px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-item .faq-content {
+            padding: 0 16px 16px 16px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--ow);
+        }
+
+        /* CTA SECTION */
+        .need-help {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 48px 20px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            border-bottom: 1px solid rgba(202, 255, 0, 0.1);
+        }
+
+        .need-help h3 {
+            font-family: 'Rajdhani', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--el);
+            margin-bottom: 16px;
+        }
+
+        .need-help p {
+            color: var(--ow);
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .help-button {
+            background: linear-gradient(135deg, var(--el) 0%, #B8E600 100%);
+            color: var(--vb);
+            border: none;
+            padding: 14px 36px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Rajdhani', monospace;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .help-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(202, 255, 0, 0.3);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--dc);
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 60px 20px 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Rajdhani', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--el);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--cg);
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--el);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 24px 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--cg);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .categories-tabs {
+                gap: 12px;
+            }
+
+            .category-tab {
+                font-size: 12px;
+            }
+
+            .faq-item summary {
+                font-size: 13px;
+            }
+
+            .need-help h3 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .categories-tabs {
+                flex-direction: column;
+                border-bottom: none;
+                margin-bottom: 32px;
+            }
+
+            .category-tab {
+                border-bottom: 2px solid rgba(202, 255, 0, 0.1);
+                padding: 12px;
+                text-align: left;
+            }
+
+            .category-tab.active {
+                border-bottom-color: var(--el);
+            }
+
+            .faq-item summary {
+                font-size: 12px;
+                padding: 12px;
+            }
+
+            .faq-item .faq-content {
+                padding: 0 12px 12px 12px;
+                font-size: 13px;
+            }
+
+            .need-help h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slogan-bar">O rolê não pode parar! ∞</div>
+
+    <nav>
+        <a href="index.html" class="nav-brand">Help Peças</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="categoria.html">Categorias</a></li>
+            <li><a href="quem-somos.html">Quem Somos</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+        <div class="nav-icons">
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="M21 21l-4.35-4.35"></path>
+                </svg>
+            </button>
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 7l-8-4-8 4m0 0v10l8 4 8-4V7m-8 4v6"></path>
+                </svg>
+            </button>
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="index.html">Início</a> / <span>FAQ</span>
+    </div>
+
+    <section class="hero">
+        <h1>PERGUNTAS FREQUENTES</h1>
+        <p>Tudo o que você precisa saber</p>
+        <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+            <input type="text" placeholder="Buscar resposta...">
+        </div>
+    </section>
+
+    <div class="faq-container">
+        <div class="categories-tabs">
+            <button class="category-tab active" onclick="switchCategory('pedidos')">Pedidos</button>
+            <button class="category-tab" onclick="switchCategory('envio')">Envio</button>
+            <button class="category-tab" onclick="switchCategory('pecas')">Peças</button>
+            <button class="category-tab" onclick="switchCategory('garantia')">Garantia</button>
+            <button class="category-tab" onclick="switchCategory('pagamento')">Pagamento</button>
+        </div>
+
+        <!-- PEDIDOS -->
+        <div id="pedidos" class="faq-accordion active">
+            <div class="faq-item">
+                <details>
+                    <summary>Como faço um pedido?</summary>
+                    <div class="faq-content">
+                        <p>Fazer um pedido na Help Peças é bem simples! Navegue pelo nosso catálogo de categorias, selecione a peça que você precisa, verifique a compatibilidade com seu modelo de e-scooter ou e-bike, adicione ao carrinho e prossiga para o checkout. Você pode pagar com Pix, Cartão de Crédito ou Boleto Bancário. Confirmado o pagamento, você receberá a confirmação por email!</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Posso alterar meu pedido?</summary>
+                    <div class="faq-content">
+                        <p>Sim! Você pode alterar seu pedido em até 2 horas após confirmação, antes do nosso sistema separar o material. Para isso, entre em contato conosco pelo WhatsApp (11) 99999-9999 ou envie um email para contato@helppecas.com.br com o número do pedido e as alterações que deseja fazer.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Como acompanho meu pedido?</summary>
+                    <div class="faq-content">
+                        <p>Você pode acompanhar seu pedido em tempo real acessando nossa página de <a href="rastreamento.html" style="color: var(--el);">Rastreamento</a>. Basta inserir o número do seu pedido e você verá o status atual da entrega. Você também receberá notificações automáticas por email em cada etapa do processo.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- ENVIO -->
+        <div id="envio" class="faq-accordion">
+            <div class="faq-item">
+                <details>
+                    <summary>Qual o prazo de entrega?</summary>
+                    <div class="faq-content">
+                        <p>Despachamos todos os pedidos em até 24 horas. Os prazos de entrega variam conforme a modalidade escolhida:</p>
+                        <p><strong>SEDEX:</strong> 3 a 5 dias úteis</p>
+                        <p><strong>PAC:</strong> 7 a 12 dias úteis</p>
+                        <p>Prazos contados a partir da confirmação de pagamento. Finais de semana e feriados não são considerados dias úteis.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Frete é grátis?</summary>
+                    <div class="faq-content">
+                        <p>Sim! Oferecemos frete grátis para pedidos acima de R$ 199,00 (exceto para algumas localidades e produtos muito grandes). Para pedidos abaixo desse valor, você pode escolher pagar o frete ou buscar uma modalidade mais econômica na página de checkout.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Vocês enviam para todo Brasil?</summary>
+                    <div class="faq-content">
+                        <p>Sim! Entregamos para todo o Brasil através de parceria com as Correios (SEDEX e PAC). Alguns locais como zonas rurais muito remotas podem ter prazos estendidos. Você pode inserir seu CEP no checkout para visualizar o prazo específico para sua região.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- PEÇAS -->
+        <div id="pecas" class="faq-accordion">
+            <div class="faq-item">
+                <details>
+                    <summary>As peças são originais?</summary>
+                    <div class="faq-content">
+                        <p>100% sim! Todas as nossas peças são originais, fornecidas diretamente pelos fabricantes. Não vendemos réplicas, compatíveis genéricos ou peças refurbished. Queremos garantir a qualidade, segurança e durabilidade do seu rolê.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Como sei se a peça é compatível com meu modelo?</summary>
+                    <div class="faq-content">
+                        <p>Cada peça em nosso catálogo possui um <strong>Guia de Compatibilidade</strong> detalhado. Basta conferir se o modelo do seu e-scooter ou e-bike está listado. Se tiver dúvida, você pode entrar em contato conosco via WhatsApp, email ou chat e nosso time técnico irá ajudar a identificar a peça correta para seu veículo.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- GARANTIA -->
+        <div id="garantia" class="faq-accordion">
+            <div class="faq-item">
+                <details>
+                    <summary>Qual a garantia das peças?</summary>
+                    <div class="faq-content">
+                        <p>Todas as peças vendidas pela Help Peças possuem <strong>garantia de 6 meses</strong>, a partir da data de entrega. Esta garantia cobre defeitos de fabricação e funcionamento. Use normal e desgaste não estão cobertos pela garantia.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Como solicito uma troca pela garantia?</summary>
+                    <div class="faq-content">
+                        <p>Se você identificar um defeito dentro do período de garantia, entre em contato conosco enviando:</p>
+                        <p>1. Número do pedido e foto da peça com defeito<br>
+                        2. Vídeo ou descrição detalhada do problema<br>
+                        3. Comprovante da entrega</p>
+                        <p>Nosso time analisará e, se confirmado o defeito, enviaremos uma peça de reposição gratuitamente!</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- PAGAMENTO -->
+        <div id="pagamento" class="faq-accordion">
+            <div class="faq-item">
+                <details>
+                    <summary>Quais são as formas de pagamento?</summary>
+                    <div class="faq-content">
+                        <p>Aceitamos as seguintes formas de pagamento:</p>
+                        <p><strong>Pix (instantâneo):</strong> A forma mais rápida e com desconto especial!</p>
+                        <p><strong>Cartão de Crédito:</strong> Em até 12 vezes sem juros</p>
+                        <p><strong>Boleto Bancário:</strong> Com vencimento em 3 dias úteis</p>
+                        <p>Todas as transações são seguras e criptografadas.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary>Tem desconto no Pix?</summary>
+                    <div class="faq-content">
+                        <p>Sim! Se você pagar com Pix, você ganha automaticamente <strong>5% de desconto</strong> no valor total da compra. É a melhor forma de economizar e ainda pagar na hora!</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <section class="need-help">
+        <h3>Ainda precisa de ajuda?</h3>
+        <p>Não encontrou a resposta? Nossa equipe está pronta pra ajudar!</p>
+        <a href="contato.html" class="help-button">Fale com a Gente</a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Compre</h4>
+                <ul>
+                    <li><a href="categoria.html">Categorias</a></li>
+                    <li><a href="carrinho.html">Carrinho</a></li>
+                    <li><a href="checkout.html">Checkout</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Sobre</h4>
+                <ul>
+                    <li><a href="quem-somos.html">Quem Somos</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="rastreamento.html">Rastreamento</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Políticas</h4>
+                <ul>
+                    <li><a href="politicas.html">Termos de Uso</a></li>
+                    <li><a href="politicas.html">Privacidade</a></li>
+                    <li><a href="politicas.html">Trocas e Devoluções</a></li>
+                    <li><a href="politicas.html">Garantia</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <ul>
+                    <li><a href="tel:+5511999999999">(11) 99999-9999</a></li>
+                    <li><a href="mailto:contato@helppecas.com.br">contato@helppecas.com.br</a></li>
+                    <li><a href="#">São Paulo, SP</a></li>
+                    <li><a href="#">Segunda a Sexta, 9h-18h</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Help Peças. Todos os direitos reservados. O rolê não pode parar! ∞</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchCategory(categoryId) {
+            const accordions = document.querySelectorAll('.faq-accordion');
+            accordions.forEach(acc => acc.classList.remove('active'));
+
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            document.getElementById(categoryId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

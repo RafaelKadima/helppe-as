@@ -1,0 +1,330 @@
+================================================================================
+HELP PEÇAS EXECUTIVE DASHBOARD - QUICK START GUIDE
+================================================================================
+
+FILE: help-pecas-dashboard.xlsx
+LOCATION: /sessions/wizardly-laughing-euler/mnt/outputs/
+
+================================================================================
+WHAT'S INSIDE (6 SHEETS)
+================================================================================
+
+1. PAINEL EXECUTIVO (Executive Dashboard)
+   - 5 KPI scorecards with real-time metrics
+   - Revenue vs Target tracking
+   - Marketing investment breakdown
+   - Conversion funnel visualization
+   - Ready for executive briefings and presentations
+
+2. DADOS (Data Engine)
+   - Single source of truth
+   - 21 key metrics tracked monthly (Jan-Dec 2026)
+   - Pre-filled with realistic data (Jan-Mar 2026)
+   - All formulas auto-calculate when you add data
+   - 121 automatic calculations
+
+3. MARKETING (Marketing Analytics)
+   - 8 marketing channels analyzed
+   - ROAS calculations per channel
+   - CPL (Cost per Lead) tracking
+   - CPA (Cost per Acquisition) analysis
+   - Google Ads leading at 6.0x ROAS
+
+4. PROJETOS (Project Management)
+   - 30 key deliverables tracked
+   - Status visualization (Completed/In Progress/Pending/Delayed)
+   - Gantt chart timeline (Mar 2026 - Feb 2027)
+   - Projects across 5 departments
+   - Color-coded by status
+
+5. ROADMAP 2026-2028 (Strategic Roadmap)
+   - 3-year vision by strategic pillar
+   - 7 pillars: E-commerce, Marketing, Operations, Technology, People, Product, Finance
+   - 28 major initiatives mapped to quarters
+   - Quarterly visualization shows overlaps and sequencing
+
+6. EQUIPE & CUSTOS (Team & Costs)
+   - 16 team member roles with costs
+   - 2 growth phases (2026, 2027+)
+   - CLT vs Contractor breakdown
+   - Automatic payroll cost calculations (70% overhead)
+   - Cost scaling model
+
+================================================================================
+KEY METRICS TRACKED
+================================================================================
+
+REVENUE & BUSINESS:
+- Faturamento Bruto (Gross Revenue)
+- Receita Líquida (Net Revenue)
+- Ticket Médio (Average Order Value)
+- Margem Bruta (Gross Margin %)
+
+TRAFFIC & CONVERSIONS:
+- Visitantes Únicos (Unique Visitors)
+- Taxa de Conversão (Conversion Rate %)
+- Leads Gerados (Leads Generated)
+- Carrinhos Criados (Shopping Carts)
+
+CUSTOMER ECONOMICS:
+- CAC (Customer Acquisition Cost)
+- LTV (Lifetime Value)
+- LTV/CAC Ratio (Profitability)
+- ROAS (Return on Ad Spend)
+
+OPERATIONS:
+- Pedidos (Order Count)
+- Giro Estoque (Inventory Turnover Days)
+- SLA Entrega (Delivery SLA %)
+- Taxa Devolução (Return Rate %)
+- SKUs Ativos (Active Products)
+
+CUSTOMER SATISFACTION:
+- NPS (Net Promoter Score)
+- CSAT (Customer Satisfaction)
+- Clientes Recorrentes (Repeat Customer %)
+
+================================================================================
+HOW TO UPDATE MONTHLY
+================================================================================
+
+STEP 1: Open "Dados" sheet
+STEP 2: Enter actual numbers for the current month
+        - Example: If March data, go to column D (Mar)
+        - Enter into rows 2-21 for all metrics
+
+STEP 3: All other sheets automatically recalculate:
+        - "Painel Executivo" KPI cards update instantly
+        - "Marketing" channel metrics recalculate
+        - YTD and % Meta columns auto-update
+        - All formulas refresh
+
+STEP 4: Review dashboard:
+        - Open "Painel Executivo" for executive summary
+        - Check "Marketing" for channel performance
+        - Review "Projetos" for delivery status
+
+================================================================================
+COLOR CODING & VISUAL INDICATORS
+================================================================================
+
+EXECUTIVE DASHBOARD (Painel Executivo):
+- Dark backgrounds highlight key metrics
+- Lime text (#CAFF00) = Primary data to watch
+- Gray labels = Context
+- No gridlines = Clean, professional look
+
+PROJECTS GANTT CHART:
+- Lime (#CAFF00) = Completed projects
+- Steel Blue (#2D4659) = In Progress
+- Light Gray = Pending
+- Orange (#FF6B00) = Delayed/Blocked
+- ● (colored bullet) in "Semáforo" column = Status indicator
+
+STRATEGIC ROADMAP:
+- █ (filled lime blocks) = Initiative active that quarter
+- Empty = Inactive
+- Visual timeline shows 3-year sequencing
+
+DATA QUALITY INDICATORS:
+- Green fill in "% Meta" column = On track (≥25% of annual goal)
+- Yellow = Caution (15-24% of goal)
+- Red = Behind (< 15% of goal)
+
+================================================================================
+SAMPLE DATA INCLUDED
+================================================================================
+
+JANUARY 2026 (Launch month):
+- Revenue: R$ 420,000
+- Orders: 1,750
+- Visitors: 62,500
+- Conversion Rate: 2.8%
+- CAC: R$ 58
+
+FEBRUARY 2026 (Growth):
+- Revenue: R$ 465,000 (+10.7%)
+- Orders: 1,920
+- Visitors: 71,000
+- Conversion Rate: 2.7%
+- CAC: R$ 55 (improving)
+
+MARCH 2026 (Acceleration):
+- Revenue: R$ 485,000 (+4.3%)
+- Orders: 2,003
+- Visitors: 78,500
+- Conversion Rate: 2.5%
+- CAC: R$ 52 (continuing downward)
+
+All metrics show healthy early-stage growth trajectory.
+
+================================================================================
+CRITICAL PROJECTS (IN PROGRESS)
+================================================================================
+
+MUST-COMPLETE IN Q1 2026:
+1. VTEX platform migration - 75% complete
+2. 2000 SKU catalog - 56% complete
+3. GA4 analytics setup - COMPLETED
+4. Payment/shipping integrations - Multiple in progress
+
+Q2 2026 CRITICAL PATH:
+- Marketplace integrations (Mercado Livre, Amazon)
+- Distribution center setup
+- Head of Marketing hiring
+- Head of Operations hiring
+
+================================================================================
+TEAM HEADCOUNT & COSTS
+================================================================================
+
+CURRENT TEAM (March 2026): 7 people
+- CEO/Founder (PJ)
+- Dev Fullstack (CLT)
+- E-commerce Analyst (CLT)
+- Social Media Manager (CLT)
+- Designer (PJ)
+- Warehouse Operator (CLT)
+- SAC Attendant (CLT)
+
+TOTAL MONTHLY COST: ~R$ 71,400 (salary + benefits)
+
+HIRING PLAN 2026:
+- Videomaker (Mar 2026)
+- Content Writer (Feb 2026)
+- Head Marketing (Mar 2026 - recruiting)
+- Head Operations (Apr 2026 - recruiting)
+- 5 more roles through Jun 2026
+
+PHASE 2 (2027+) EXPANSION:
+Additional R$ 58,300/month for expanded team of 16
+
+================================================================================
+DESIGN PRINCIPLES USED
+================================================================================
+
+This dashboard follows Cole Nussbaumer Knaflic's "Storytelling with Data":
+
+1. ELIMINATE CLUTTER
+   - No gridlines - cleaner visual
+   - Minimal borders - focus on content
+   - Generous white space - breathing room
+
+2. STRATEGIC COLOR USE
+   - Gray for context
+   - Lime for what matters most
+   - Orange for alerts
+   - Dark backgrounds for emphasis
+
+3. PREATTENTIVE ATTRIBUTES
+   - Bold, large numbers grab attention first
+   - Size hierarchy shows importance
+   - Color directs focus to key metrics
+
+4. INSIGHT-FIRST TITLES
+   - Not just metric names
+   - Titles that tell the story
+   - Examples:
+     * "RECEITA vs META — Estamos no caminho certo?"
+     * "QUAIS CANAIS TRAZEM MAIOR RETORNO?"
+     * "EVOLUÇÃO DO FUNIL DE CONVERSÃO"
+
+5. DATA INTEGRITY
+   - Single source of truth (Dados sheet)
+   - All calculations via formulas
+   - Automatic updates across sheets
+   - No manual copying
+
+================================================================================
+INVESTOR/BOARD PRESENTATION USE
+================================================================================
+
+This dashboard is board-ready:
+
+FOR 5-MINUTE ELEVATOR PITCH:
+1. Show "Painel Executivo" - KPI cards instantly visible
+2. Show "Dados" - "On track with 2026 targets"
+3. Show "Roadmap 2026-2028" - Strategic vision
+
+FOR 30-MINUTE BOARD MEETING:
+1. Executive Dashboard (business health)
+2. Marketing metrics (customer acquisition efficiency)
+3. Projects dashboard (execution capability)
+4. Roadmap (3-year strategy)
+5. Team & Costs (realistic financial model)
+
+FOR INVESTOR PITCH:
+- Professional design speaks to execution quality
+- Data-driven approach shows discipline
+- Growth plan is realistic and sequenced
+- Team investment shows commitment to scale
+
+================================================================================
+CUSTOMIZATION NOTES
+================================================================================
+
+EASY TO CUSTOMIZE:
+- All colors follow hex codes (search & replace)
+- All fonts are Arial (system-wide)
+- Metrics can be added/removed from Dados sheet
+- Projects can be added by inserting rows
+
+NOT RECOMMENDED TO CHANGE:
+- Formula structure (would break calculations)
+- Sheet order (references depend on order)
+- Header row positions (freeze panes depend on this)
+
+FOR BRANDING:
+- Tab colors can be customized per pillar
+- Logo could be added to title row
+- Color scheme matches Help Peças brand
+
+================================================================================
+FORMULAS INCLUDED (121 TOTAL)
+================================================================================
+
+CALCULATED AUTOMATICALLY:
+- Ticket Médio (Revenue ÷ Orders)
+- Conversion Rate (Orders ÷ Visitors)
+- LTV/CAC Ratio (LTV ÷ CAC)
+- All YTD accumulations (SUM/AVERAGE)
+- All % Meta progress (YTD ÷ Target)
+- ROAS by channel (Revenue ÷ Investment)
+- CPL (Cost per Lead)
+- CPA (Cost per Acquisition)
+- Budget % allocation
+- Payroll encargos (70% overhead)
+- Total team costs
+
+NO MANUAL CALCULATIONS NEEDED - all are dynamic formulas!
+
+================================================================================
+SUPPORT & UPDATES
+================================================================================
+
+FILE VERSION: 1.0 (March 5, 2026)
+CREATED WITH: Python openpyxl library
+FORMULA VALIDATION: 121 formulas, 0 errors
+
+TO UPDATE FORMULAS:
+- Use included recalc.py script
+- Or open file in Excel and press Ctrl+Shift+F9
+
+TO SHARE:
+- File is .xlsx compatible with all Excel versions
+- Google Sheets can open it
+- Apple Numbers can open it
+- All formulas remain intact across platforms
+
+================================================================================
+
+For detailed information, see: DASHBOARD_GUIDE.md
+
+Questions? This dashboard is built to be self-explanatory with clear labels,
+color coding, and formula transparency. All calculations are documented.
+
+Last updated: March 5, 2026
+Dashboard version: 1.0
+Status: Production-ready
+
+================================================================================

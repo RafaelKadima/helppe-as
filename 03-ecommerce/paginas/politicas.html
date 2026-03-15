@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Políticas e Termos - Help Peças</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vb: #0A0A0A;
+            --el: #CAFF00;
+            --cg: #6B6B6B;
+            --sb: #2D4659;
+            --ow: #F5F5F3;
+            --dc: #1A1A1A;
+            --wo: #FF6B00;
+        }
+
+        body {
+            background-color: var(--vb);
+            color: var(--ow);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* SLOGAN BAR */
+        .slogan-bar {
+            background-color: var(--el);
+            color: var(--vb);
+            text-align: center;
+            padding: 12px 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        /* HEADER / NAV */
+        header {
+            background-color: var(--dc);
+            border-bottom: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--el);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            flex: 1;
+        }
+
+        nav a {
+            color: var(--ow);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--el);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--ow);
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            color: var(--el);
+        }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--cg);
+            display: flex;
+            gap: 8px;
+        }
+
+        .breadcrumb a {
+            color: var(--el);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--ow);
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1200px;
+            margin: 60px auto 60px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 14px;
+            color: var(--cg);
+            margin-bottom: 12px;
+        }
+
+        /* TABS */
+        .policies-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            margin-bottom: 80px;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid rgba(202, 255, 0, 0.15);
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-input {
+            display: none;
+        }
+
+        .tab-label {
+            padding: 16px 24px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--cg);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .tab-label:hover {
+            color: var(--el);
+        }
+
+        .tab-input:checked + .tab-label {
+            color: var(--el);
+            border-bottom-color: var(--el);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-input:checked + .tab-label + .tab-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CONTENT STYLES */
+        .tab-content h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: var(--el);
+        }
+
+        .tab-content h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: var(--ow);
+        }
+
+        .tab-content p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+            color: var(--ow);
+            font-size: 14px;
+        }
+
+        .tab-content ol,
+        .tab-content ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .tab-content li {
+            margin-bottom: 12px;
+            color: var(--ow);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .tab-content strong {
+            color: var(--el);
+            font-weight: 600;
+        }
+
+        .last-updated {
+            font-size: 12px;
+            color: var(--cg);
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--dc);
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            padding: 60px 20px 0;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--el);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: var(--ow);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--el);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 0;
+            border-top: 1px solid rgba(202, 255, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--cg);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            nav {
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .tabs-nav {
+                gap: 0;
+            }
+
+            .tab-label {
+                padding: 12px 16px;
+                font-size: 12px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .tabs-nav {
+                flex-direction: column;
+                border-bottom: none;
+            }
+
+            .tab-label {
+                padding: 12px 16px;
+                border-bottom: 1px solid rgba(202, 255, 0, 0.1) !important;
+                border-left: 3px solid transparent;
+            }
+
+            .tab-input:checked + .tab-label {
+                border-left-color: var(--el);
+                border-bottom-color: rgba(202, 255, 0, 0.1);
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-content h2 {
+                font-size: 18px;
+            }
+
+            .tab-content h3 {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slogan-bar">
+        O rolê não pode parar! ∞
+    </div>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Help Peças</a>
+            <ul>
+                <li><a href="categoria.html">Categorias</a></li>
+                <li><a href="quem-somos.html">Quem Somos</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                </button>
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </button>
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Políticas e Termos</span>
+    </div>
+
+    <section class="hero">
+        <h1>POLÍTICAS E TERMOS</h1>
+        <p class="subtitle">Informações importantes sobre privacidade, uso e regulamentações</p>
+    </section>
+
+    <div class="policies-container">
+        <div class="tabs-nav">
+            <input type="radio" id="tab-privacy" name="policy-tabs" class="tab-input" checked>
+            <label for="tab-privacy" class="tab-label">Política de Privacidade</label>
+
+            <input type="radio" id="tab-terms" name="policy-tabs" class="tab-input">
+            <label for="tab-terms" class="tab-label">Termos de Uso</label>
+
+            <input type="radio" id="tab-returns" name="policy-tabs" class="tab-input">
+            <label for="tab-returns" class="tab-label">Trocas e Devoluções</label>
+
+            <input type="radio" id="tab-shipping" name="policy-tabs" class="tab-input">
+            <label for="tab-shipping" class="tab-label">Política de Frete</label>
+        </div>
+
+        <!-- TAB 1: POLÍTICA DE PRIVACIDADE -->
+        <div class="tab-content">
+            <h2>Política de Privacidade</h2>
+
+            <h3>1. Coleta de Dados</h3>
+            <p>
+                A Help Peças coleta informações pessoais necessárias para fornecer nossos serviços de forma eficiente. Os dados coletados incluem:
+            </p>
+            <ul>
+                <li><strong>Informações de Identificação:</strong> Nome completo, CPF/CNPJ, data de nascimento</li>
+                <li><strong>Informações de Contato:</strong> Email, telefone, endereço de entrega e cobrança</li>
+                <li><strong>Informações de Pagamento:</strong> Dados de cartão de crédito, banco para transferência (processados de forma segura)</li>
+                <li><strong>Informações de Navegação:</strong> Endereço IP, tipo de navegador, páginas visitadas, duração das visitas</li>
+                <li><strong>Preferências:</strong> Histórico de compras, produtos visualizados, categorias de interesse</li>
+            </ul>
+
+            <h3>2. Uso dos Dados</h3>
+            <p>
+                Utilizamos as informações coletadas para:
+            </p>
+            <ul>
+                <li>Processar pedidos e realizar entregas</li>
+                <li>Enviar confirmações de pedido e informações de rastreamento</li>
+                <li>Comunicar sobre promoções e novidades (apenas se consentido)</li>
+                <li>Melhorar nossos serviços e experiência do usuário</li>
+                <li>Prevenir fraudes e garantir segurança</li>
+                <li>Cumprir obrigações legais e regulatórias</li>
+                <li>Executar análises estatísticas e pesquisas de mercado</li>
+            </ul>
+
+            <h3>3. Compartilhamento de Dados</h3>
+            <p>
+                Seus dados pessoais não são vendidos para terceiros. Compartilhamos informações apenas com:
+            </p>
+            <ul>
+                <li><strong>Transportadoras:</strong> Endereço e informações básicas para entrega</li>
+                <li><strong>Provedores de Pagamento:</strong> Dados necessários para processar transações</li>
+                <li><strong>Serviços Analíticos:</strong> Dados agregados e anônimos para melhorar o site</li>
+                <li><strong>Autoridades Legais:</strong> Quando obrigado por lei</li>
+            </ul>
+
+            <h3>4. Cookies e Rastreamento</h3>
+            <p>
+                Utilizamos cookies para melhorar sua experiência. Você pode desativar cookies em suas configurações de navegador, mas isso pode afetar a funcionalidade do site. Tipos de cookies utilizados:
+            </p>
+            <ul>
+                <li><strong>Essenciais:</strong> Necessários para funcionamento do site</li>
+                <li><strong>Performance:</strong> Para análise de uso</li>
+                <li><strong>Marketing:</strong> Para personalizar recomendações</li>
+            </ul>
+
+            <h3>5. Segurança dos Dados</h3>
+            <p>
+                Implementamos medidas de segurança incluindo encriptação SSL 256-bit, autenticação de dois fatores e firewalls para proteger seus dados contra acessos não autorizados.
+            </p>
+
+            <h3>6. Direitos do Usuário (LGPD)</h3>
+            <p>
+                De acordo com a Lei Geral de Proteção de Dados (LGPD), você possui o direito de:
+            </p>
+            <ul>
+                <li>Acessar seus dados pessoais</li>
+                <li>Corrigir informações incompletas ou inexatas</li>
+                <li>Deletar seus dados (direito ao esquecimento)</li>
+                <li>Solicitar portabilidade de dados</li>
+                <li>Revogar consentimento para comunicações</li>
+                <li>Não receber decisões automatizadas prejudiciais</li>
+            </ul>
+            <p>
+                Para exercer seus direitos, entre em contato conosco através do email privacidade@helpecas.com.br.
+            </p>
+
+            <h3>7. Retenção de Dados</h3>
+            <p>
+                Mantemos seus dados pelo tempo necessário para cumprir as finalidades descritas ou conforme exigido por lei. Dados de transações são retidos por 5 anos para fins legais e contábeis.
+            </p>
+
+            <h3>8. Alterações na Política</h3>
+            <p>
+                Reservamos o direito de atualizar esta política. Notificaremos sobre mudanças significativas por email ou através de destaque no site.
+            </p>
+
+            <div class="last-updated">
+                Última atualização: 1º de março de 2025
+            </div>
+        </div>
+
+        <!-- TAB 2: TERMOS DE USO -->
+        <div class="tab-content">
+            <h2>Termos de Uso</h2>
+
+            <h3>1. Aceitação dos Termos</h3>
+            <p>
+                Ao acessar e utilizar o site Help Peças, você concorda em estar vinculado a estes Termos de Uso. Se não concordar com qualquer parte, abstém-se de usar a plataforma.
+            </p>
+
+            <h3>2. Descrição dos Serviços</h3>
+            <p>
+                A Help Peças fornece uma plataforma de e-commerce para venda de peças e acessórios para patinetes elétricos e bikes elétricas. Nos reservamos o direito de modificar ou descontinuar serviços a qualquer momento.
+            </p>
+
+            <h3>3. Elegibilidade do Usuário</h3>
+            <p>
+                Para usar nossos serviços, você deve:
+            </p>
+            <ul>
+                <li>Ter no mínimo 18 anos ou estar sob consentimento dos pais/responsável</li>
+                <li>Ser residente legal do Brasil</li>
+                <li>Não estar incluído em listas de sanção ou de não realização de transações</li>
+                <li>Concordar em fornecer informações precisas e atualizadas</li>
+            </ul>
+
+            <h3>4. Criação de Conta</h3>
+            <p>
+                Você é responsável por manter a confidencialidade de suas credenciais de login. Você concorda em:
+            </p>
+            <ul>
+                <li>Usar apenas uma conta por pessoa</li>
+                <li>Não compartilhar sua senha</li>
+                <li>Notificar-nos imediatamente de uso não autorizado</li>
+                <li>Ser responsável por todas as atividades em sua conta</li>
+            </ul>
+
+            <h3>5. Direitos de Propriedade Intelectual</h3>
+            <p>
+                Todo conteúdo do site (textos, imagens, logos, layouts) é propriedade intelectual da Help Peças ou de seus fornecedores, protegido por lei de direitos autorais. É proibido reproduzir, distribuir ou modificar sem permissão expressa.
+            </p>
+
+            <h3>6. Restrições de Uso</h3>
+            <p>
+                Você concorda em não:
+            </p>
+            <ul>
+                <li>Usar a plataforma para atividades ilegais</li>
+                <li>Transmitir malware ou código prejudicial</li>
+                <li>Assediar, ameaçar ou ofender outros usuários</li>
+                <li>Contornar medidas de segurança</li>
+                <li>Coletar dados de forma não autorizada</li>
+                <li>Criar bots ou scripts automatizados</li>
+                <li>Tentar ganhar acesso não autorizado</li>
+            </ul>
+
+            <h3>7. Transações e Pagamentos</h3>
+            <p>
+                Você concorda em:
+            </p>
+            <ul>
+                <li>Pagar pelos produtos conforme o método selecionado</li>
+                <li>Fornecer informações de pagamento precisas e atualizadas</li>
+                <li>Ser responsável por sobretaxas ou recusas de pagamento</li>
+                <li>Cumprir todos os termos de seu provedor de pagamento</li>
+            </ul>
+            <p>
+                Preços estão sujeitos a alterações sem aviso prévio. Oferecemos parcelamento de até 12x sem juros em compras acima de R$ 100,00.
+            </p>
+
+            <h3>8. Limitação de Responsabilidade</h3>
+            <p>
+                A Help Peças não será responsável por:
+            </p>
+            <ul>
+                <li>Danos indiretos, incidentais ou consequenciais</li>
+                <li>Perda de dados ou lucros</li>
+                <li>Interrupção de serviço por força maior</li>
+                <li>Atrasos de entrega por culpa de transportadoras</li>
+            </ul>
+
+            <h3>9. Isenção de Garantias</h3>
+            <p>
+                Os serviços são fornecidos "como estão" sem garantias de qualquer tipo. Não garantimos que o site será ininterrupto ou livre de erros.
+            </p>
+
+            <h3>10. Lei Aplicável</h3>
+            <p>
+                Estes termos são regidos pelas leis da República Federativa do Brasil, particularmente as leis do Estado de São Paulo, sem considerar conflitos de leis.
+            </p>
+
+            <div class="last-updated">
+                Última atualização: 1º de março de 2025
+            </div>
+        </div>
+
+        <!-- TAB 3: TROCAS E DEVOLUÇÕES -->
+        <div class="tab-content">
+            <h2>Política de Trocas e Devoluções</h2>
+
+            <h3>1. Direito de Devolução</h3>
+            <p>
+                Você tem direito de devolver qualquer produto dentro de <strong>7 (sete) dias corridos</strong> a partir da data de recebimento, sem necessidade de justificativa. Este é um direito garantido pelo Código de Defesa do Consumidor.
+            </p>
+
+            <h3>2. Condições para Devolução</h3>
+            <p>
+                O produto deve estar:
+            </p>
+            <ul>
+                <li>Sem uso, ou com uso mínimo</li>
+                <li>Em perfeito estado de conservação</li>
+                <li>Com embalagem original intacta</li>
+                <li>Com acessórios e manuais inclusos</li>
+                <li>Com etiqueta de código de barras intacta</li>
+            </ul>
+            <p>
+                Produtos que apresentem sinais de desgaste excessivo, manchas, riscos ou danos causados pelo usuário podem ter a devolução recusada.
+            </p>
+
+            <h3>3. Processo de Devolução</h3>
+            <p>
+                Para devolver um produto:
+            </p>
+            <ol>
+                <li>Acesse sua conta em Help Peças e localize o pedido</li>
+                <li>Clique em "Solicitar Devolução" e informe o motivo</li>
+                <li>Imprima o rótulo de retorno fornecido</li>
+                <li>Embale o produto com segurança</li>
+                <li>Entregue em uma das transportadoras parceiras</li>
+            </ol>
+            <p>
+                Após recebermos e inspecionarmos o produto, seu reembolso será processado dentro de 5 a 10 dias úteis.
+            </p>
+
+            <h3>4. Custos de Devolução</h3>
+            <p>
+                Para compras dentro da política (7 dias, produto em perfeito estado), <strong>a Help Peças arca com o custo da devolução</strong>. Fornecemos rótulo de retorno sem custo adicional.
+            </p>
+
+            <h3>5. Devoluções Fora do Prazo</h3>
+            <p>
+                Devoluções solicitadas após 7 dias podem ser aceitas, mas o cliente arca com os custos de envio de retorno. Entrada da mercadoria deve ser solicitada previamente através do contato@helpecas.com.br.
+            </p>
+
+            <h3>6. Produtos Defeituosos ou com Defeito de Fabricação</h3>
+            <p>
+                Caso receba um produto defeituoso:
+            </p>
+            <ul>
+                <li>Fotografe o defeito e descreva o problema</li>
+                <li>Entre em contato com suporte@helpecas.com.br no prazo de 30 dias</li>
+                <li>Enviaremos um rótulo de retorno gratuito</li>
+                <li>Após recebimento e análise, ofereceremos reembolso ou troca</li>
+            </ul>
+            <p>
+                Produtos com defeito de fabricação são reembolsados 100%, inclusive despesas de envio.
+            </p>
+
+            <h3>7. Trocas por Outro Produto</h3>
+            <p>
+                Você pode solicitar troca por outro produto do mesmo valor ou similar dentro de 7 dias. Se optar por produto de valor inferior, a diferença será devolvida. Para produto de valor superior, você arca com a diferença.
+            </p>
+
+            <h3>8. Produtos em Promoção ou Liquidação</h3>
+            <p>
+                Produtos vendidos com desconto de 50% ou superior podem ter devolução recusada. Verifique o aviso de "Não Reembolsável" na página do produto antes de comprar.
+            </p>
+
+            <h3>9. Reembolso</h3>
+            <p>
+                O reembolso será creditado no mesmo método de pagamento original:
+            </p>
+            <ul>
+                <li><strong>Cartão de Crédito:</strong> 3-5 dias úteis (pode aparecer como crédito de próxima fatura)</li>
+                <li><strong>Pix/Transferência:</strong> 1-2 dias úteis</li>
+                <li><strong>Boleto:</strong> Processamento manual, até 5 dias úteis</li>
+            </ul>
+
+            <h3>10. Contato para Devoluções</h3>
+            <p>
+                Para dúvidas sobre devoluções:
+            </p>
+            <ul>
+                <li>Email: devolucoes@helpecas.com.br</li>
+                <li>WhatsApp: (11) 99999-9999</li>
+                <li>Telefone: (11) 3000-0000</li>
+                <li>Horário: Segunda a sexta, 9h às 18h</li>
+            </ul>
+
+            <div class="last-updated">
+                Última atualização: 1º de março de 2025
+            </div>
+        </div>
+
+        <!-- TAB 4: POLÍTICA DE FRETE -->
+        <div class="tab-content">
+            <h2>Política de Frete</h2>
+
+            <h3>1. Frete Grátis</h3>
+            <p>
+                Oferecemos frete grátis para:
+            </p>
+            <ul>
+                <li>Compras acima de R$ 150,00 em todo o Brasil</li>
+                <li>Pedidos abaixo de R$ 150,00: consulte o valor de frete na finalização da compra</li>
+                <li>Clientes do programa "Help Club": frete grátis em todas as compras</li>
+            </ul>
+
+            <h3>2. Transportadoras Parceiras</h3>
+            <p>
+                Utilizamos as seguintes transportadoras para garantir entrega rápida e segura:
+            </p>
+            <ul>
+                <li><strong>Help Express:</strong> Entregas em São Paulo</li>
+                <li><strong>Sedex (Correios):</strong> Todo o Brasil</li>
+                <li><strong>JadLog:</strong> Principais cidades</li>
+                <li><strong>Loggi:</strong> Grandes centros urbanos</li>
+                <li><strong>Correios PAC:</strong> Todo o Brasil</li>
+            </ul>
+
+            <h3>3. Prazos de Entrega</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="border-bottom: 2px solid rgba(202, 255, 0, 0.2);">
+                        <th style="text-align: left; padding: 12px; color: var(--el);">Região</th>
+                        <th style="text-align: left; padding: 12px; color: var(--el);">Help Express</th>
+                        <th style="text-align: left; padding: 12px; color: var(--el);">Sedex</th>
+                        <th style="text-align: left; padding: 12px; color: var(--el);">PAC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid rgba(202, 255, 0, 0.1);">
+                        <td style="padding: 12px;">Grande São Paulo</td>
+                        <td style="padding: 12px;">1-2 dias úteis</td>
+                        <td style="padding: 12px;">2-3 dias úteis</td>
+                        <td style="padding: 12px;">5-7 dias úteis</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(202, 255, 0, 0.1);">
+                        <td style="padding: 12px;">Interior SP/RJ/MG</td>
+                        <td style="padding: 12px;">-</td>
+                        <td style="padding: 12px;">3-5 dias úteis</td>
+                        <td style="padding: 12px;">7-10 dias úteis</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(202, 255, 0, 0.1);">
+                        <td style="padding: 12px;">Região Sul</td>
+                        <td style="padding: 12px;">-</td>
+                        <td style="padding: 12px;">4-6 dias úteis</td>
+                        <td style="padding: 12px;">10-15 dias úteis</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(202, 255, 0, 0.1);">
+                        <td style="padding: 12px;">Região Nordeste</td>
+                        <td style="padding: 12px;">-</td>
+                        <td style="padding: 12px;">5-7 dias úteis</td>
+                        <td style="padding: 12px;">12-17 dias úteis</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;">Região Norte</td>
+                        <td style="padding: 12px;">-</td>
+                        <td style="padding: 12px;">6-9 dias úteis</td>
+                        <td style="padding: 12px;">15-20 dias úteis</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4. Rastreamento</h3>
+            <p>
+                Todos os pedidos possuem código de rastreamento que permite acompanhar em tempo real. O código será enviado por email após a confirmação do pagamento. Você também pode rastrear seu pedido em nossa página de <a href="rastreamento.html" style="color: var(--el); text-decoration: underline;">rastreamento</a>.
+            </p>
+
+            <h3>5. Atrasos de Entrega</h3>
+            <p>
+                Os prazos estimados são informativos. Atrasos podem ocorrer por:
+            </p>
+            <ul>
+                <li>Condições climáticas adversas</li>
+                <li>Problemas com infraestrutura de transporte</li>
+                <li>Greves e paralisações</li>
+                <li>Aduanas (pedidos internacionais)</li>
+            </ul>
+            <p>
+                Em caso de atraso superior a 10 dias, entre em contato conosco. A Help Peças não é responsável por atrasos causados pelas transportadoras ou força maior.
+            </p>
+
+            <h3>6. Retirada em Lojas</h3>
+            <p>
+                Clientes na região de São Paulo podem optar por retirada em nossas lojas:
+            </p>
+            <ul>
+                <li><strong>Loja Consolação:</strong> Av. Consolação, 2000 - Consolação, São Paulo/SP</li>
+                <li><strong>Loja Vila Mariana:</strong> R. Leopoldo Couto de Magalhães, 500 - Vila Mariana, São Paulo/SP</li>
+                <li><strong>Loja Tatuapé:</strong> Av. Radial Leste, 1000 - Tatuapé, São Paulo/SP</li>
+            </ul>
+            <p>
+                Horários: Segunda a sábado, 10h às 20h. Domingos, 14h às 20h. Seu pedido ficará disponível para retirada no mesmo dia (se pago até às 11h).
+            </p>
+
+            <h3>7. Endereços com Restrição</h3>
+            <p>
+                Algumas regiões podem ter restrições de entrega. Estes incluem:
+            </p>
+            <ul>
+                <li>Regiões remotas ou de difícil acesso</li>
+                <li>Certos bairros de áreas de risco</li>
+                <li>Zonas rurais distantes</li>
+                <li>Ilhas e terrenos isolados</li>
+            </ul>
+            <p>
+                Para verificar se seu endereço está disponível, insira o CEP na página de checkout. Transportadoras podem recusar entrega em locais não informados previamente.
+            </p>
+
+            <h3>8. Responsabilidade por Danos no Envio</h3>
+            <p>
+                A Help Peças é responsável por danos ocorridos durante o armazenamento em nosso centro de distribuição. Danos causados pelas transportadoras devem ser reportados imediatamente após recebimento do produto.
+            </p>
+            <p>
+                Para reclamar danos:
+            </p>
+            <ol>
+                <li>Fotografe o dano no produto e na embalagem</li>
+                <li>Recuse a entrega ou registre o dano no documento de entrega</li>
+                <li>Entre em contato conosco em suporte@helpecas.com.br no mesmo dia</li>
+                <li>Enviaremos comprovante e número para abrir reclamação com transportadora</li>
+            </ol>
+
+            <h3>9. Frete Internacional</h3>
+            <p>
+                Atualmente, não realizamos entregas internacionais. Futuras expansões serão anunciadas em nosso blog e redes sociais.
+            </p>
+
+            <h3>10. Contato sobre Frete</h3>
+            <p>
+                Para dúvidas sobre frete e entrega:
+            </p>
+            <ul>
+                <li>Email: frete@helpecas.com.br</li>
+                <li>Telefone: (11) 3000-0000</li>
+                <li>Chat: disponível de segunda a sexta, 9h às 18h</li>
+            </ul>
+
+            <div class="last-updated">
+                Última atualização: 1º de março de 2025
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Categorias</h3>
+                <ul>
+                    <li><a href="categoria.html">Pneus e Câmaras</a></li>
+                    <li><a href="categoria.html">Freios e Discos</a></li>
+                    <li><a href="categoria.html">Baterias</a></li>
+                    <li><a href="categoria.html">Motores</a></li>
+                    <li><a href="categoria.html">Acessórios</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Empresa</h3>
+                <ul>
+                    <li><a href="quem-somos.html">Quem Somos</a></li>
+                    <li><a href="contato.html">Entre em Contato</a></li>
+                    <li><a href="rastreamento.html">Rastreamento</a></li>
+                    <li><a href="faq.html">Perguntas Frequentes</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Suporte</h3>
+                <ul>
+                    <li><a href="politicas.html">Política de Privacidade</a></li>
+                    <li><a href="politicas.html">Termos de Uso</a></li>
+                    <li><a href="politicas.html">Trocas e Devoluções</a></li>
+                    <li><a href="politicas.html">Política de Frete</a></li>
+                    <li><a href="contato.html">Suporte ao Cliente</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Conecte-se</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Help Peças. Todos os direitos reservados.</p>
+            <p>Desenvolvido com <span style="color: var(--el);">∞</span> para o rolê</p>
+        </div>
+    </footer>
+</body>
+</html>
